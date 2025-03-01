@@ -1,0 +1,79 @@
+/* CreateBoardModal.module.css */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Fundal semi-transparent */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContainer {
+  background-color:#151515;
+  width: 90%;
+  min-width: 500px;
+  padding: 20px;
+  border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.tabsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.tabButton {
+  background: none;
+  color: white;
+  border: 1px solid #bedbb0;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tabButton:hover {
+  background-color: #218838;
+}
+
+@media (max-width: 768px) {
+  .modalContainer {
+    width: 95%;
+    /* Lățime mai mare pe mobil */
+    padding: 15px;
+  }
+
+  .tabsContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tabButton {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 375px) {
+  .inputField {
+    font-size: 14px;
+    /* Text mai mic pe ecrane foarte mici */
+  }
+}
