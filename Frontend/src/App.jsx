@@ -1,4 +1,3 @@
-// src/App.jsx
 import React from 'react';
 import {
   BrowserRouter as Router,
@@ -6,16 +5,24 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import ScreensPage from './components/ScreensPage';
+import styles from './App.module.css';
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/home" element={<HomePage />} />
-        {/* <Route path="/home" element={<HomePage />} /> */}
-        <Route path="*" element={<Navigate to="/home" />} />
-      </Routes>
+      <div className={styles.app}>
+        <Header />
+        <div className={styles.mainContainer}>
+          <Sidebar />
+          <Routes>
+            <Route path="/home" element={<ScreensPage />} />
+            <Route path="*" element={<Navigate to="/home" />} />
+          </Routes>
+        </div>
+      </div>
     </Router>
   );
 }

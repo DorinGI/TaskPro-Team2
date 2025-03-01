@@ -1,11 +1,16 @@
 import React from 'react';
+import Header from '../components/Header';
+import Sidebar from '../components/Sidebar';
+import ScreensPage from '../components/ScreensPage';
 
 const HomePage = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold text-blue-600">
-        Salutare TaskPro-Team2 👋
-      </h1>
+    <div className="flex">
+      <Sidebar />
+      <div className="flex-1">
+        <Header />
+        <ScreensPage />
+      </div>
     </div>
   );
 };
