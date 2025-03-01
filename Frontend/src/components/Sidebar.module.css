@@ -1,0 +1,33 @@
+.sidebar {
+  width: 250px;
+  background: #222;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.createBoard,
+.needHelp,
+.logout {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.createBoard {
+  background: #4caf50;
+  color: white;
+}
+
+.needHelp {
+  background: #ff9800;
+  color: white;
+}
+
+.logout {
+  background: #f44336;
+  color: white;
+}
