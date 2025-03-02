@@ -76,9 +76,9 @@ const CreateBoardModal = ({ isOpen, onClose, onCreate }) => {
                 <input
                   type="radio"
                   name="icon"
-                  value="icon1"
+                  value="icon-hexagon"
                   onChange={formik.handleChange}
-                  checked={formik.values.icon === 'icon1'}
+                  checked={formik.values.icon === 'icon-hexagon'}
                 />
                 Icon 1
               </label>
@@ -86,9 +86,9 @@ const CreateBoardModal = ({ isOpen, onClose, onCreate }) => {
                 <input
                   type="radio"
                   name="icon"
-                  value="icon2"
+                  value="icon-star"
                   onChange={formik.handleChange}
-                  checked={formik.values.icon === 'icon2'}
+                  checked={formik.values.icon === 'icon-star'}
                 />
                 Icon 2
               </label>
@@ -96,9 +96,9 @@ const CreateBoardModal = ({ isOpen, onClose, onCreate }) => {
                 <input
                   type="radio"
                   name="icon"
-                  value="icon3"
+                  value="icon-puzzle-piece"
                   onChange={formik.handleChange}
-                  checked={formik.values.icon === 'icon3'}
+                  checked={formik.values.icon === 'icon-puzzle-piece'}
                 />
                 Icon 3
               </label>

@@ -1,79 +1,167 @@
 .sidebar {
-  width: 250px;
-  background: #222;
+  width: 240px;
+  background: #1e1e2f;
   color: white;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
+  border-right: 2px solid #2a2a40;
+  height: 100vh;
+  align-items: center;
 }
 
-.createBoard,
-.needHelp,
-.logout {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
+.logo {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #4caf50;
+  border-radius: 6px;
+  background: transparent;
+  color: #4caf50;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
+  transition: 0.3s ease-in-out;
 }
 
-.createBoard {
+button:hover {
   background: #4caf50;
   color: white;
 }
 
 .needHelp {
+  border-color: #ff9800;
+  color: #ff9800;
+}
+
+.needHelp:hover {
   background: #ff9800;
-  color: white;
 }
 
 .logout {
-  background: #f44336;
-  color: white;
+  border-color: #f44336;
+  color: #f44336;
 }
+
+.logout:hover {
+  background: #f44336;
+}
+
 .boardList {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin-top: 15px;
+  max-height: 55vh;
+  overflow-y: auto;
+  width: 100%;
 }
 
 .boardItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #333;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
+  background: #2a2a40;
+  padding: 8px;
+  border-radius: 6px;
+  margin-bottom: 8px;
   transition: background 0.3s ease;
 }
 
 .boardItem:hover {
-  background: #444;
+  background: #373759;
 }
 
 .boardIcon {
-  font-size: 24px;
-  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+  stroke: white;
+  stroke-opacity: 0.5;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .boardTitle {
   flex-grow: 1;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .editButton,
 .deleteButton {
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
-  font-size: 18px;
   padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
 }
 
-.editButton {
-  color: #ffeb3b;
+.editButton svg,
+.deleteButton svg {
+  width: 18px;
+  height: 18px;
+  stroke: white;
+  stroke-opacity: 0.5;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-.deleteButton {
-  color: #f44336;
+
+.editButton:hover svg,
+.deleteButton:hover svg {
+  stroke-opacity: 1;
+}
+
+.editButton:hover,
+.deleteButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.boardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Spațiu între text și buton */
+}
+
+.createBoardText {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.plusButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  width: 40px;
+  height: 36px;
+  background: #bedbb0;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.plusButton:hover {
+  background: #a2d69f;
 }
