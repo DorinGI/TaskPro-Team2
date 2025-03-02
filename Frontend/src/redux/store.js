@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice.js';
+import boardsReducer from './boardsSlice.js';
 
 const initialState = {
   theme: 'Light',
@@ -18,5 +19,6 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,
     theme: themeReducer,
+    boards: boardsReducer,
   },
 });

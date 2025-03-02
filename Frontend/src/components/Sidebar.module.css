@@ -31,3 +31,49 @@
   background: #f44336;
   color: white;
 }
+.boardList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.boardItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #333;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: background 0.3s ease;
+}
+
+.boardItem:hover {
+  background: #444;
+}
+
+.boardIcon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.boardTitle {
+  flex-grow: 1;
+  font-size: 16px;
+}
+
+.editButton,
+.deleteButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+}
+
+.editButton {
+  color: #ffeb3b;
+}
+.deleteButton {
+  color: #f44336;
+}

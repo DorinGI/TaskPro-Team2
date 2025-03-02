@@ -1,36 +1,41 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { useFormik } from "formik";
-import Modal from "./Modal";
-import ReactEllipsis from "react-ellipsis-text";
-import styles from "./CreateBoardModal.module.css";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { saveBoard } from '../redux/boardsSlice';
+import Modal from './Modal';
+import ReactEllipsis from 'react-ellipsis-text';
+import styles from './CreateBoardModal.module.css';
 
 const CreateBoardModal = ({ isOpen, onClose, onCreate }) => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
-      title: "",
-      icon: "icon1",
-      background: "none",
+      title: '',
+      icon: 'icon1',
+      background: 'none',
     },
-    onSubmit: (values) => {
+    onSubmit: async values => {
       if (!values.title.trim()) return;
-      onCreate(values);
+
+      await dispatch(saveBoard(values));
+
       onClose();
     },
-    validate: (values) => {
+    validate: values => {
       const errors = {};
       if (!values.title.trim()) {
-        errors.title = "Title is required";
+        errors.title = 'Title is required';
       }
       return errors;
     },
   });
 
-  const handleTabChange = (event, newValue) => {
-    setSelectedTab(newValue);
-  };
+  // const handleTabChange = (event, newValue) => {
+  //   setSelectedTab(newValue);
+  // };
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Create New Board">
       <form onSubmit={formik.handleSubmit}>
@@ -42,11 +47,11 @@ const CreateBoardModal = ({ isOpen, onClose, onCreate }) => {
               value={formik.values.title}
               onChange={formik.handleChange}
               className={`${styles.inputField} ${
-                formik.errors.title ? styles.inputFieldError : ""
+                formik.errors.title ? styles.inputFieldError : ''
               }`}
             />
             {formik.errors.title && (
-              <div style={{ color: "red" }}>{formik.errors.title}</div>
+              <div style={{ color: 'red' }}>{formik.errors.title}</div>
             )}
           </div>
 
@@ -73,7 +78,7 @@ const CreateBoardModal = ({ isOpen, onClose, onCreate }) => {
                   name="icon"
                   value="icon1"
                   onChange={formik.handleChange}
-                  checked={formik.values.icon === "icon1"}
+                  checked={formik.values.icon === 'icon1'}
                 />
                 Icon 1
               </label>
@@ -83,7 +88,7 @@ const CreateBoardModal = ({ isOpen, onClose, onCreate }) => {
                   name="icon"
                   value="icon2"
                   onChange={formik.handleChange}
-                  checked={formik.values.icon === "icon2"}
+                  checked={formik.values.icon === 'icon2'}
                 />
                 Icon 2
               </label>
@@ -93,7 +98,7 @@ const CreateBoardModal = ({ isOpen, onClose, onCreate }) => {
                   name="icon"
                   value="icon3"
                   onChange={formik.handleChange}
-                  checked={formik.values.icon === "icon3"}
+                  checked={formik.values.icon === 'icon3'}
                 />
                 Icon 3
               </label>
@@ -108,7 +113,7 @@ const CreateBoardModal = ({ isOpen, onClose, onCreate }) => {
                   name="background"
                   value="none"
                   onChange={formik.handleChange}
-                  checked={formik.values.background === "none"}
+                  checked={formik.values.background === 'none'}
                 />
                 No Background
               </label>
@@ -118,7 +123,7 @@ const CreateBoardModal = ({ isOpen, onClose, onCreate }) => {
                   name="background"
                   value="bg1"
                   onChange={formik.handleChange}
-                  checked={formik.values.background === "bg1"}
+                  checked={formik.values.background === 'bg1'}
                 />
                 Background 1
               </label>
@@ -128,14 +133,14 @@ const CreateBoardModal = ({ isOpen, onClose, onCreate }) => {
                   name="background"
                   value="bg2"
                   onChange={formik.handleChange}
-                  checked={formik.values.background === "bg2"}
+                  checked={formik.values.background === 'bg2'}
                 />
                 Background 2
               </label>
             </div>
           )}
 
-          <div style={{ marginTop: "20px" }}>
+          <div style={{ marginTop: '20px' }}>
             <h4>
               <ReactEllipsis
                 text="This is a very long text that should be truncated if it exceeds the space."
