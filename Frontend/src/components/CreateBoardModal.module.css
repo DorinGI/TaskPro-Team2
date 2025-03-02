@@ -6,19 +6,24 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  /* Fundal semi-transparent */
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
 
 .modalContainer {
-  background-color:#151515;
-  width: 90%;
-  min-width: 500px;
+  background-color: #151515;
+  width: 350px;
+  height: 433px;
   padding: 20px;
   border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   position: relative;
 }
 
@@ -30,50 +35,116 @@
   border: none;
   font-size: 16px;
   cursor: pointer;
+  padding: 5px;
 }
 
-.tabsContainer {
+.radioGroup {
+  display: flex;
+  justify-content: start;
+  gap: 15px;
+}
+
+.hiddenRadio {
+  display: none;
+}
+
+.selectedIcon{
+  fill: #bf8c8c;
+}
+
+.iconContainer:hover{
+  background-color: #2a2a2a;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  fill: #9bbf8c;
+  transition: fill 0.3s ease;
+}
+
+.iconContainer.selectedIcon .icon{
+  fill: #9bbf8c;
+}
+
+.backgroundGrid {
+  display: grid;
+ grid-template-columns: repeat(8, 1fr);
+ grid-template-rows: repeat(2,1fr);
+ gap: 8px;
+  justify-items: start;
+  margin-bottom: 20px;
+}
+
+.backgroundContainer {
+  width: 28px;
+  height: 28px;
+  background-size: cover;
+  background-position: center;
+  border:  transparent;
+  border-radius: 1px;
+  cursor: pointer;
+  transition: transform 0.2s, border 0.2s;
+}
+
+.backgroundContainer:hover {
+  border: 2px solid #9bbf8c;
+  background-color: rgba(155, 191, 140, 0.3);
+}
+
+.selectedBackground {
+  border: 2px solid #9bbf8c;
+  transform: scale(1.1);
+  background-color: rgba(155, 191, 140, 0.3);
+}
+
+.createButtonWrapper {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
+  margin-top: auto;
 }
 
-.tabButton {
-  background: none;
-  color: white;
-  border: 1px solid #bedbb0;
-  padding: 10px 15px;
+.createButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #bedbb0;
+  color: black;
+  padding: 10px 20px;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
   transition: background-color 0.3s ease;
 }
 
-.tabButton:hover {
-  background-color: #218838;
+.createButton:hover {
+  background-color: #9bbf8c;
 }
 
+.plusBox {
+  width: 20px;
+  height: 20px;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 3px;
+}
 @media (max-width: 768px) {
   .modalContainer {
     width: 95%;
-    /* Lățime mai mare pe mobil */
     padding: 15px;
-  }
-
-  .tabsContainer {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .tabButton {
-    width: 100%;
-    text-align: center;
   }
 }
 
 @media (max-width: 375px) {
   .inputField {
     font-size: 14px;
-    /* Text mai mic pe ecrane foarte mici */
   }
 }
