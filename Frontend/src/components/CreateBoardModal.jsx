@@ -160,6 +160,7 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
                   onChange={formik.handleChange}
                   checked={formik.values.icon === icon.value}
                   className={styles.hiddenRadio}
+
                 />
                 <div
                   className={`${styles.iconContainer} ${
@@ -177,6 +178,7 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
           <div className={styles.backgroundGrid}>
             {backgroundOptions.map((bg) => (
               <label key={bg.value} className={styles.radioLabel}>
+
                 <input
                   type="radio"
                   name="background"

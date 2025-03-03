@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoards, saveBoard, deleteBoard } from '../redux/boardsSlice';
+import sprite from '../assets/sprite.svg';
 import styles from './Sidebar.module.css';
 import CreateBoardModal from './CreateBoardModal';
 import HelpModal from './HelpModal';
@@ -40,12 +41,22 @@ const Sidebar = () => {
   return (
     <aside className={styles.sidebar}>
       <h2>My Boards</h2>
-      <button onClick={() => setIsModalOpen(true)}>Create New Board</button>
+      <div className={styles.boardHeader}>
+        <span className={styles.createBoardText}>Create New Board</span>
+        <button
+          className={styles.plusButton}
+          onClick={() => setIsModalOpen(true)}
+        >
+          +
+        </button>
+      </div>
       {loading && <p>Loading...</p>}
       <ul className={styles.boardList}>
         {boards.map(board => (
           <li key={board.id} className={styles.boardItem}>
-            <span className={styles.boardIcon}>{board.icon}</span>
+            <svg className={styles.boardIcon} aria-hidden="true">
+              <use xlinkHref={`${sprite}#${board.icon}`} />
+            </svg>
             <span className={styles.boardTitle}>{board.title}</span>
             <button
               className={styles.editButton}
@@ -54,13 +65,17 @@ const Sidebar = () => {
                 setIsModalOpen(true);
               }}
             >
-              ✏️
+              <svg className={styles.boardButtonIcon} aria-hidden="true">
+                <use xlinkHref={`${sprite}#icon-pencil`} />
+              </svg>
             </button>
             <button
               className={styles.deleteButton}
-              onClick={() => dispatch(deleteBoard(board.id))}
+              onClick={() => dispatch(deleteBoard(board._id))}
             >
-              ❌
+              <svg className={styles.boardButtonIcon} aria-hidden="true">
+                <use xlinkHref={`${sprite}#icon-trash`} />
+              </svg>
             </button>
           </li>
         ))}
