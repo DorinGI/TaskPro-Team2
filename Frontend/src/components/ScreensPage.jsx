@@ -1,9 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import styles from './ScreensPage.module.css';
+import React from "react";
+import { useSelector } from "react-redux";
+import styles from "./ScreensPage.module.css";
 
 const ScreensPage = () => {
-  const theme = useSelector(state => state.theme?.theme || 'Light');
+  const theme = useSelector((state) => state.theme?.theme || "Light");
 
   return (
     <div className={`${styles.screensPage} ${styles[theme.toLowerCase()]}`}>
