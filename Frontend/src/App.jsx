@@ -5,9 +5,9 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import ScreensPage from './components/ScreensPage';
+import Header from './components/Header.jsx'; 
+import Sidebar from './components/Sidebar.jsx'; 
+import ScreensPage from './components/ScreenPage/ScreenPage.jsx'; 
 import styles from './App.module.css';
 
 function App() {
