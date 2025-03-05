@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import PropTypes from "prop-types";
 import styles from "./HelpModal.module.css";
+import Modal from "./Modal";
 
 const HelpModal = ({ isOpen, onClose }) => {
   const [userEmail, setUserEmail] = useState("");
@@ -41,56 +42,55 @@ const HelpModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    isOpen && (
-      <div className={styles.overlay}>
-        <div className={styles.modal}>
-          <button className={styles.closeButton} onClick={onClose}>
-            &times;
-          </button>
-          <h2>Need Help?</h2>
-          <form onSubmit={formik.handleSubmit}>
-            {/* Câmpul pentru email */}
-            <div className={styles.inputGroup}>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Email address"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={
-                  formik.touched.email && formik.errors.email ? "error" : ""
-                }
-              />
-              {formik.touched.email && formik.errors.email ? (
-                <div className="error-message">{formik.errors.email}</div>
-              ) : null}
-            </div>
-
-            {/* Câmpul pentru mesaj */}
-            <div className={styles.inputGroup}>
-              <textarea
-                id="comment"
-                name="comment"
-                placeholder="Comment"
-                value={formik.values.comment}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className={
-                  formik.touched.comment && formik.errors.comment ? "error" : ""
-                }
-              />
-              {formik.touched.comment && formik.errors.comment ? (
-                <div className="error-comment">{formik.errors.comment}</div>
-              ) : null}
-            </div>
-
-            <button type="submit">Send</button>
-          </form>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Need Help?"
+      className={styles.helpModal}
+    >
+      <form onSubmit={formik.handleSubmit}>
+        {/* Câmpul pentru email */}
+        <div className={styles.inputGroup}>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email address"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={
+              formik.touched.email && formik.errors.email ? "error" : ""
+            }
+          />
+          {formik.touched.email && formik.errors.email ? (
+            <div className="error-message">{formik.errors.email}</div>
+          ) : null}
         </div>
-      </div>
-    )
+
+        {/* Câmpul pentru mesaj */}
+        <div className={styles.inputGroup}>
+          <textarea
+            id="comment"
+            name="comment"
+            placeholder="Comment"
+            value={formik.values.comment}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={
+              formik.touched.comment && formik.errors.comment ? "error" : ""
+            }
+          />
+          {formik.touched.comment && formik.errors.comment ? (
+            <div className="error-comment">{formik.errors.comment}</div>
+          ) : null}
+        </div>
+
+        <button type="submit" className={styles.submitButton}>
+          Send
+        </button>
+      </form>
+    </Modal>
   );
 };
 

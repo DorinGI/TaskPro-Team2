@@ -149,7 +149,7 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
               <div style={{ color: "red" }}>{formik.errors.title}</div>
             )}
           </div>
-          <h3>Icons</h3>
+          <h3 className={styles.title}>Icons</h3>
           <div className={styles.radioGroup}>
             {iconOptions.map((icon) => (
               <label key={icon.value} className={styles.radioLabel}>
@@ -160,25 +160,23 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
                   onChange={formik.handleChange}
                   checked={formik.values.icon === icon.value}
                   className={styles.hiddenRadio}
-
                 />
                 <div
                   className={`${styles.iconContainer} ${
                     formik.values.icon === icon.value ? styles.selectedIcon : ""
                   }`}
                 >
-                  <svg className={styles.icon}>
+                  <svg className={styles.icon} fill="currentColor">
                     <use xlinkHref={`/icons/symbol-defs.svg#${icon.value}`} />
                   </svg>
                 </div>
               </label>
             ))}
           </div>
-          <h3>Background</h3>
+          <h3 className={styles.title}>Background</h3>
           <div className={styles.backgroundGrid}>
             {backgroundOptions.map((bg) => (
               <label key={bg.value} className={styles.radioLabel}>
-
                 <input
                   type="radio"
                   name="background"
@@ -199,16 +197,14 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
             ))}
           </div>
 
-          <div className={styles.createButtonWrapper}>
-            <button
-              type="submit"
-              className={styles.createButton}
-              disabled={!formik.isValid || formik.isSubmitting}
-            >
-              <div className={styles.plusBox}>+</div>
-              {boardToEdit ? "Update" : "Create"}
-            </button>
-          </div>
+          <button
+            type="submit"
+            className={styles.createButton}
+            disabled={!formik.isValid || formik.isSubmitting}
+          >
+            <div className={styles.plusBox}>+</div>
+            {boardToEdit ? "Update" : "Create"}
+          </button>
         </div>
       </form>
     </Modal>
