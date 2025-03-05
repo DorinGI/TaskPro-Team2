@@ -8,7 +8,6 @@ import fs from "fs";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import boardRoutes from "./routes/boardRoutes.js";
-import dashboardsRoutes from "./routes/dashboardsRoutes.js";
 import columnRoutes from "./routes/columnRoutes.js";
 import cardRoutes from "./routes/cardRoutes.js";
 
@@ -27,7 +26,6 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api/boards", boardRoutes);
-app.use("/api/dashboards", dashboardsRoutes);
 app.use("/api/columns", columnRoutes);
 app.use("/api/cards", cardRoutes);
 
