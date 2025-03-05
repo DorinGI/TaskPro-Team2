@@ -1,76 +1,60 @@
 import React, { useState } from 'react';
-// import * as yup from 'yup';
-// import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import styles from './LoginForm.module.css';
 import { Icon } from '../Icon/Icon';
-// import { useAppDispatch, useAppSelector } from '../../hooks/auth';
-// import { selectError } from '../../redux/auth/selectors';
-import { loginUser } from '../../redux/authSlice';
-
-// const loginSchema = yup.object().shape({
-//   email: yup.string().email().required(),
-//   password: yup.string().min(7).max(14).required(),
-// });
+import { loginUser } from '../../redux/auth/authSlice';
 
 const LoginForm = () => {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm <
-  // loginFormData >
-  // {
-  //   resolver: yupResolver(loginSchema),
-  // };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [errorMessage, setErrorMessage] = useState('');
+  const [passwordState, setPasswordState] = useState('password');
+  const dispatch = useDispatch();
 
-  // const [passwordState, setPasswordState] =
-  //   (useState < 'text') | ('password' > 'password');
+  const onSubmit = async data => {
+    try {
+      await dispatch(loginUser(data));
+    } catch (error) {
+      setErrorMessage('Login failed. Please try again.');
+    }
+  };
 
-  // const dispatch = useAppDispatch();
-  // const authError = useAppSelector(selectError);
-
-  // const togglePasswordState = () => {
-  //   setPasswordState((prev: 'text' | 'password') => {
-  //     return prev === 'text' ? 'password' : 'text';
-  //   });
-  // };
-
-  const onSubmit = async () => {
-    await dispatch(loginUser(data));
+  const togglePasswordState = () => {
+    setPasswordState(prev => (prev === 'password' ? 'text' : 'password'));
   };
 
   return (
     <form
       className={styles.form}
       onSubmit={handleSubmit(onSubmit)}
-      autoComplete="false"
+      autoComplete="off"
     >
       <input
         className={styles.formInput}
         placeholder="Enter your email"
-        {...register('email')}
+        {...register('email', { required: 'Email is required' })}
       />
-      <p className={errors?.email ? styles.formError : styles.noFormError}>
-        {errors?.email?.message}
-      </p>
+      <p className={styles.formError}>{errors.email?.message}</p>
+
       <div className={styles.passwordWrap}>
         <input
-          type={passwordState}
+          type={passwordState} // ✅ Folosim starea corectă
           className={styles.formInput}
-          placeholder="Confirm a password"
-          {...register('password')}
+          placeholder="Enter your password"
+          {...register('password', { required: 'Password is required' })}
         />
         <div onClick={togglePasswordState} className={styles.eye}>
           <Icon id="eye" size={18} />
         </div>
       </div>
-      <p
-        className={
-          errors?.password || authError ? styles.formError : styles.noFormError
-        }
-      >
-        {errors?.password?.message ?? authError}
-      </p>
+      <p className={styles.formError}>{errors.password?.message}</p>
+
+      {errorMessage && <p className={styles.formError}>{errorMessage}</p>}
+
       <button className={styles.submitBtn} type="submit">
         Log in now
       </button>

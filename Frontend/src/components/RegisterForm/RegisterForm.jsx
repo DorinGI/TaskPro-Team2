@@ -1,41 +1,26 @@
 import React, { useState } from 'react';
-// import { useForm } from 'react-hook-form';
-// import { registerFormData } from '../../types';
-// import * as yup from 'yup';
-// import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import styles from './RegisterForm.module.css';
 import { Icon } from '../Icon/Icon';
-// import { useAppDispatch } from '../../hooks/auth';
-import { registerUser } from '../../redux/authSlice';
-
-// const registerSchema = yup.object().shape({
-//   name: yup.string().min(2).max(20).required(),
-//   email: yup.string().email().required(),
-//   password: yup.string().min(7).max(14).required(),
-// });
+import { registerUser } from '../../redux/auth/authSlice';
 
 const RegisterForm = () => {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   reset,
-  //   formState: { errors },
-  // } = useForm <
-  // registerFormData >
-  // {
-  //   resolver: yupResolver(registerSchema),
-  // };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const [message, setMessage] = useState('');
+  const [isError, setIsError] = useState(false);
+  const dispatch = useDispatch();
 
-  const [message, setMessage] = (useState < string) | (null > null);
-  const [isError, setIsError] = useState < boolean > false; // ✅ Adăugăm stare pentru stil
-
-  // const dispatch = useAppDispatch();
-
-  const onSubmit = async () => {
+  const onSubmit = async data => {
     try {
       const resultAction = await dispatch(registerUser(data));
 
-      console.log('📌 Rezultat registerUser:', resultAction); // ✅ Debugging - vezi răspunsul backend
+      console.log('📌 Rezultat registerUser:', resultAction);
 
       if (registerUser.fulfilled.match(resultAction)) {
         console.log(
@@ -43,14 +28,14 @@ const RegisterForm = () => {
           resultAction.payload
         );
         setMessage('✅ Utilizator înregistrat cu succes!');
-        setIsError(false); // ✅ Stil verde pentru succes
+        setIsError(false);
         reset();
       } else if (registerUser.rejected.match(resultAction)) {
         console.error('❌ Eroare la înregistrare:', resultAction.payload);
         setMessage(
           resultAction.payload?.message || '❌ Eroare la înregistrare.'
         );
-        setIsError(true); // ✅ Stil roșu pentru eroare
+        setIsError(true);
       }
     } catch (error) {
       console.error('❌ Eroare necunoscută la înregistrare:', error);
@@ -65,36 +50,35 @@ const RegisterForm = () => {
         <input
           className={styles.formInput}
           placeholder="Enter your name"
-          {...register('name')}
+          {...register('name', { required: 'Name is required' })}
         />
-        <p className={styles.formError}>{errors?.name?.message}</p>
+        <p className={styles.formError}>{errors.name?.message}</p>
 
         <input
           className={styles.formInput}
           placeholder="Enter your email"
-          {...register('email')}
+          {...register('email', { required: 'Email is required' })}
         />
-        <p className={styles.formError}>{errors?.email?.message}</p>
+        <p className={styles.formError}>{errors.email?.message}</p>
 
         <div className={styles.passwordWrap}>
           <input
             type="password"
             className={styles.formInput}
             placeholder="Create a password"
-            {...register('password')}
+            {...register('password', { required: 'Password is required' })}
           />
           <div className={styles.eye}>
             <Icon id="eye" size={18} />
           </div>
         </div>
-        <p className={styles.formError}>{errors?.password?.message}</p>
+        <p className={styles.formError}>{errors.password?.message}</p>
       </div>
 
       <button className={styles.submitBtn} type="submit">
         Register Now
       </button>
 
-      {/* ✅ Afișează mesajul cu stil diferit în funcție de eroare */}
       {message && (
         <p className={isError ? styles.errorMessage : styles.successMessage}>
           {message}

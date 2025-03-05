@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '../api/axiosInstance.js';
+import axiosInstance from '../../api/axiosInstance.js';
 
 // Axios instance with Authorization header
 // const api = axios.create({
