@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './authSlice.js'; 
-import boardsReducer from './boardsSlice.js'; 
-
+import authReducer from './authSlice.js';
+import boardsReducer from './boardsSlice.js';
 
 const initialState = {
   theme: 'Light',
