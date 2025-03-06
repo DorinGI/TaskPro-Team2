@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,8 +16,12 @@ import HomePage from './pages/HomePage/HomePage';
 import AuthPage from './pages/AuthPage/AuthPage';
 import WelcomePage from './pages/WelcomePage/WelcomePage';
 import styles from './App.module.css';
+import Modal from './components/Modal';
+import EditProfileForm from './components/EditProfileForm';
 
-function App() {
+const App = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <Router>
       <div className={styles.app}>
@@ -57,9 +61,15 @@ function App() {
           <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
         <Toaster position="top-center" reverseOrder={false} />
+        <div>
+          <button onClick={() => setIsModalOpen(true)}>Edit Profile</button>
+          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            <EditProfileForm onClose={() => setIsModalOpen(false)} />
+          </Modal>
+        </div>
       </div>
     </Router>
   );
-}
+};
 
 export default App;
