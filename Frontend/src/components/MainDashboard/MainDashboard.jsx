@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import ColumnTask from '../ColumnTask/ColumnTask.jsx';
-import styles from './MainDashboard.module.css'; 
+import React, { useState } from "react";
+import ColumnTask from "../ColumnTask/ColumnTask.jsx";
+import styles from "./MainDashboard.module.css";
 
 const MainDashboard = () => {
   const [columns, setColumns] = useState([
-    { id: 1, title: 'To Do', cards: [] },
-    { id: 2, title: 'In Progress', cards: [] },
-    { id: 3, title: 'Done', cards: [] },
+    { id: 1, title: "To Do", cards: [] },
+    { id: 2, title: "In Progress", cards: [] },
+    { id: 3, title: "Done", cards: [] },
   ]);
 
   const addColumn = () => {

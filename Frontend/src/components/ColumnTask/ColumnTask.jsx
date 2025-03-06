@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import sprite from '../../assets/sprite.svg';
-import styles from './ColumnTask.module.css';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import sprite from "../../assets/sprite.svg";
+import styles from "./ColumnTask.module.css";
 
 // Redux action (Ensure this matches the export in boardsSlice.js)
-import { deleteBoard } from '../../redux/boardsSlice'; // Ensure correct path and no duplicate imports
+import { deleteBoard } from "../../redux/boardsSlice"; // Ensure correct path and no duplicate imports
 
 const ColumnTask = ({ item }) => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const ColumnTask = ({ item }) => {
   const handleCloseCardModal = () => setOpenCardModal(false);
 
   const filteredColumn =
-    item.cards && item.cards.filter((card) => card.priority === 'show all');
+    item.cards && item.cards.filter((card) => card.priority === "show all");
 
   const columnLength = item.cards?.length || 0;
   const filteredColumnLength = filteredColumn?.length || 0;
@@ -68,10 +68,7 @@ const ColumnTask = ({ item }) => {
         </div>
 
         {/* Add Card Button */}
-        <button
-          className={styles.addCardButton}
-          onClick={handleOpenCardModal}
-        >
+        <button className={styles.addCardButton} onClick={handleOpenCardModal}>
           <img
             className={styles.plusIcon}
             src={`${process.env.PUBLIC_URL}/assets/plus.svg`}
