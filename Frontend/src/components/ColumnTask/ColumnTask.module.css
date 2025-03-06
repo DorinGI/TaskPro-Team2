@@ -1,0 +1,70 @@
+/* ColumnTask.module.css */
+.wrapper {
+  min-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.iconWrapper {
+  display: flex;
+  gap: 10px;
+}
+
+.editButton,
+.deleteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.editButton:hover,
+.deleteButton:hover {
+  transform: scale(1.2);
+}
+
+.editButton img,
+.deleteButton img {
+  width: 16px;
+  height: 16px;
+}
+
+.taskList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.addCardButton {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  border: none;
+  background-color: #f9f9f9;
+  color: #333;
+  border-radius: 4px;
+}
+
+.addCardButton img {
+  width: 16px;
+  height: 16px;
+}

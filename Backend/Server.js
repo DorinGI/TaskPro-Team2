@@ -8,6 +8,8 @@ import fs from 'fs';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import boardRoutes from './routes/boardRoutes.js';
+import columnRoutes from './routes/columnRoutes.js';
+import cardRoutes from './routes/cardRoutes.js';
 
 dotenv.config();
 
@@ -21,9 +23,11 @@ app.use(cors());
 // Conectăm baza de date
 connectDB();
 
-app.use('/api/auth', authRoutes);
+app.use('/api', authRoutes);
 app.use('/api', userRoutes);
 app.use('/api/boards', boardRoutes);
+app.use('/api/columns', columnRoutes);
+app.use('/api/cards', cardRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

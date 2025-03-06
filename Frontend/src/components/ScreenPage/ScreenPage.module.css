@@ -1,0 +1,25 @@
+.screensPage {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.violet {
+  background-color: #d9ead3;
+  color: #000000;
+}
+
+.dark {
+  background-color: #212121;
+  color: #ffffff;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}

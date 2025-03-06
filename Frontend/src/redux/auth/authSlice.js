@@ -1,28 +1,28 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosInstance from '../../api/axiosInstance.js';
 
 // Axios instance with Authorization header
-const api = axios.create({
-  baseURL: 'http://localhost:5000/api/auth',
-});
+// const api = axios.create({
+//   baseURL: 'http://localhost:5000/api/auth',
+// });
 
-api.interceptors.request.use(
-  config => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  error => Promise.reject(error)
-);
+// api.interceptors.request.use(
+//   config => {
+//     const token = localStorage.getItem('token');
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`;
+//     }
+//     return config;
+//   },
+//   error => Promise.reject(error)
+// );
 
 // Async Thunk for login
 export const loginUser = createAsyncThunk(
   'auth/login',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/login', userData);
+      const response = await axiosInstance.post('/login', userData);
       const { token, user, userId } = response.data;
 
       // Save token to localStorage
@@ -40,7 +40,7 @@ export const registerUser = createAsyncThunk(
   'auth/register',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/register', userData);
+      const response = await axiosInstance.post('/register', userData);
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       return user;
@@ -55,7 +55,7 @@ export const fetchUser = createAsyncThunk(
   'auth/fetchUser',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/me');
+      const response = await axiosInstance.get('/me');
       console.log(response.data);
       return response.data;
     } catch (error) {

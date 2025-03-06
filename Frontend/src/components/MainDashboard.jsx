@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const MainDashboard = () => {
   const [columns, setColumns] = useState([]);
   const [cards, setCards] = useState([]);
 
   const addColumn = () => {
-    setColumns([...columns, { title: 'New Column' }]);
+    setColumns([...columns, { title: "New Column" }]);
   };
 
-  const addCard = columnIndex => {
+  const addCard = (columnIndex) => {
     const newCard = {
-      title: 'New Card',
-      description: '',
-      priority: 'Low',
-      deadline: '2025-01-01',
+      title: "New Card",
+      description: "",
+      priority: "Low",
+      deadline: "2025-01-01",
     };
     const updatedColumns = [...columns];
     updatedColumns[columnIndex].cards.push(newCard);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoards, saveBoard, deleteBoard } from '../redux/boardsSlice';
+import { logout } from '../redux/auth/authSlice';
 import sprite from '../assets/sprite.svg';
 import styles from './Sidebar.module.css';
 import CreateBoardModal from './CreateBoardModal';
@@ -37,7 +38,9 @@ const Sidebar = () => {
   //     console.log('Board created ', values);
   //     closeModal('create');
   //   };
-
+  const handleLogout = async () => {
+    await dispatch(logout());
+  };
   return (
     <aside className={styles.sidebar}>
       <h2>My Boards</h2>
@@ -83,7 +86,9 @@ const Sidebar = () => {
       <button className={styles.needHelp} onClick={() => toggleModal('help')}>
         Need Help?
       </button>
-      <button className={styles.logout}>Log Out</button>
+      <button className={styles.logout} onClick={handleLogout}>
+        Log Out
+      </button>
 
       <CreateBoardModal
         isOpen={isModalOpen}

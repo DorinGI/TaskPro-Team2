@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './authSlice.js';
+import authReducer from './auth/authSlice.js';
 import boardsReducer from './boardsSlice.js';
 
 const initialState = {

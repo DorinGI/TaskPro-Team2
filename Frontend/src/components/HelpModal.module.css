@@ -1,130 +1,71 @@
-/* HelpModal.module.css */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
+*{
+  box-sizing: border-box;
 }
-
-.modal {
-  background-color: #151515;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 500px;
-  height: auto;
-  position: relative;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.closeButton {
-  position: absolute;
-  background: transparent;
-  color: white;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.closeButton:hover {
-  color: gray;
-}
-
-h2 {
-  margin-bottom: 20px;
-}
-
 .inputGroup {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
-input,
-textarea {
+.inputGroup input{
+  width: 352px;
+  height: 49px;
+}
+
+.inputGroup textarea{
+  width: 352px;
+  height: 120px;
+}
+
+.inputGroup input,
+.inputGroup textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #bedbb0;
   border-radius: 5px;
+  font-size: 14px;
+  resize: none;
   background-color: #151515;
   color: #fff;
-  transition: border-color 0.3s ease;
 }
 
-input.error,
-textarea.error {
+.error {
   border-color: red;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #bedbb0;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #218838;
 }
 
 .error-message,
 .error-comment {
   color: red;
   font-size: 12px;
+  margin-top: 5px;
 }
 
-@media (max-width: 375px){
-  .modal{
-    width: 90%;
-    max-width: none;
-    padding: 15px;
-  }
-
-     .closeButton {
-       font-size: 24px;
-     }
-  
-     h2 {
-       font-size: 20px;
-     }
+.submitButton {
+  width: 352px;
+  height: 49px;
+  margin: auto;
+  padding: 10px;
+  background-color: #bedbb0;
+  color: #161616;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
 }
 
-@media (min-width: 768px) and (max-width: 1024px){
-  .modal{
-    width: 80%;
-    max-width: 600px;
-    padding: 25px;
-  }
-
-     .closeButton {
-       font-size: 26px;
-     }
-  
-     h2 {
-       font-size: 24px;
-     }
+.submitButton:hover{
+  background-color: #7a9e6d;
+}
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
-@media (min-width: 1440px){
-  .modal{
-    width: 50%;
-    min-width: 700px;
-    padding: 30px;
+@media (max-width: 375px) {
+  .inputField {
+    font-size: 14px;
   }
-
-     .closeButton {
-       font-size: 28px;
-     }
-  
-     h2 {
-       font-size: 28px;
-     }
 }
