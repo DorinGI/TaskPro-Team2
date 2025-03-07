@@ -1,8 +1,8 @@
 import React from 'react';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
-import ScreensPage from '../../components/ScreensPage';
 import styles from './HomePage.module.css';
+import ScreenPage from '../../components/ScreenPage/ScreenPage'; // Imported as ScreenPage
 
 const HomePage = () => {
   return (
@@ -10,7 +10,8 @@ const HomePage = () => {
       <Sidebar />
       <div className={styles.mainCont}>
         <Header />
-        <ScreensPage />
+        {/* Use ScreenPage (singular) instead of ScreensPage */}
+        <ScreenPage />
       </div>
     </div>
   );

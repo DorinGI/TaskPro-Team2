@@ -18,29 +18,10 @@ const Sidebar = () => {
     dispatch(fetchBoards());
   }, [dispatch]);
 
-  const toggleModal = modalName => {
-    if (modalName === 'create') {
-      setIsModalOpen(true);
-    } else if (modalName === 'help') {
-      setIsHelpModalOpen(true);
-    }
-  };
-
-  const closeModal = modalName => {
-    if (modalName === 'create') {
-      setIsModalOpen(false);
-    } else if (modalName === 'help') {
-      setIsHelpModalOpen(false);
-    }
-  };
-
-  //   const handleCreateBoard = values => {
-  //     console.log('Board created ', values);
-  //     closeModal('create');
-  //   };
   const handleLogout = async () => {
     await dispatch(logout());
   };
+
   return (
     <aside className={styles.sidebar}>
       <h2>My Boards</h2>
@@ -56,7 +37,7 @@ const Sidebar = () => {
       {loading && <p>Loading...</p>}
       <ul className={styles.boardList}>
         {boards.map(board => (
-          <li key={board.id} className={styles.boardItem}>
+          <li key={board._id} className={styles.boardItem}>
             <svg className={styles.boardIcon} aria-hidden="true">
               <use xlinkHref={`${sprite}#${board.icon}`} />
             </svg>
@@ -83,7 +64,10 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      <button className={styles.needHelp} onClick={() => toggleModal('help')}>
+      <button 
+        className={styles.needHelp} 
+        onClick={() => setIsHelpModalOpen(true)}
+      >
         Need Help?
       </button>
       <button className={styles.logout} onClick={handleLogout}>
@@ -93,10 +77,12 @@ const Sidebar = () => {
       <CreateBoardModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onCreate={values => dispatch(saveBoard(values))}
-        board={selectedBoard}
+        boardToEdit={selectedBoard}
       />
-      <HelpModal isOpen={isHelpModalOpen} onClose={() => closeModal('help')} />
+      <HelpModal 
+        isOpen={isHelpModalOpen} 
+        onClose={() => setIsHelpModalOpen(false)} 
+      />
     </aside>
   );
 };

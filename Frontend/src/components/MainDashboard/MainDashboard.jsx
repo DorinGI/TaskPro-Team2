@@ -1,38 +1,34 @@
-import React, { useState } from 'react';
+// src/components/MainDashboard/MainDashboard.jsx
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ColumnTask from '../ColumnTask/ColumnTask.jsx';
-import styles from './MainDashboard.module.css'; 
+import { createColumn } from '../../redux/columnSlice.js'; // Fixed path
+import styles from './MainDashboard.module.css';
 
 const MainDashboard = () => {
-  const [columns, setColumns] = useState([
-    { id: 1, title: 'To Do', cards: [] },
-    { id: 2, title: 'In Progress', cards: [] },
-    { id: 3, title: 'Done', cards: [] },
-  ]);
+  const dispatch = useDispatch();
+  const columns = useSelector(state => state.columns.columns); // Ensure state is correct
 
-  const addColumn = () => {
-    const newColumnId = columns.length + 1;
-    setColumns([
-      ...columns,
-      { id: newColumnId, title: `Column ${newColumnId}`, cards: [] },
-    ]);
+  const handleAddColumn = () => {
+    const newColumnData = {
+      title: 'New Column',
+      boardId: 'current-board-id', // Replace with actual logic
+    };
+    dispatch(createColumn(newColumnData));
   };
 
   return (
     <div className={styles.mainDashboard}>
-      {/* Add Column Button */}
-      <button className={styles.addColumnButton} onClick={addColumn}>
-        <img
-          className={styles.plusIcon}
-          src={`${process.env.PUBLIC_URL}/assets/plus.svg`}
-          alt="Add"
-        />
-        Add another Column
+      <button 
+        className={styles.addColumnButton} 
+        onClick={handleAddColumn}
+      >
+        Add Column
       </button>
 
-      {/* Column Container */}
-      <div className={styles.columnContainer}>
+      <div className={styles.columnsContainer}>
         {columns.map((column) => (
-          <ColumnTask key={column.id} item={column} />
+          <ColumnTask key={column._id} column={column} />
         ))}
       </div>
     </div>

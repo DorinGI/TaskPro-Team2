@@ -1,17 +1,17 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import MainDashboard from '../MainDashboard/MainDashboard.jsx'; // Corrected import path
-import styles from './ScreenPage.module.css'; // Ensure this file exists
+import MainDashboard from '../MainDashboard/MainDashboard';
+import styles from './ScreenPage.module.css';
 
-const ScreensPage = () => {
+const ScreenPage = () => {
   const theme = useSelector((state) => state.theme?.theme || 'Light');
 
   return (
-    <div className={`${styles.screensPage} ${styles[theme.toLowerCase()]}`}>
-      <h1>Project Office</h1>
-      <MainDashboard /> {/* Render MainDashboard */}
+    <div className={`${styles.screenPage} ${styles[theme.toLowerCase()]}`}>
+      <h1 className={styles.title}>Project Office</h1>
+      <MainDashboard />
     </div>
   );
 };
 
-export default ScreensPage;
+export default ScreenPage;
