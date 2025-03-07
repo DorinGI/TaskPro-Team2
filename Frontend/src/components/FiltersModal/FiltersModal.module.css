@@ -1,0 +1,170 @@
+/* FiltersModal.module.css */
+
+/* Base container for the modal */
+.filtersModal__section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+/* Title of the modal */
+.filtersModal__sectionTitle {
+  color: var(--modal-text-main);
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.36px;
+  margin-bottom: 14px;
+}
+
+/* Form wrapper for background and priority sections */
+.filtersModal__formWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* Background form wrapper has borders */
+.filtersModal__formWrapper:first-of-type {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-top: 1px solid var(--modal-line);
+  border-bottom: 1px solid var(--modal-line);
+}
+
+/* Last form wrapper removes extra margin */
+.filtersModal__formWrapper:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Title for each form section (Backgrounds, Label Color) */
+.filtersModal__formTitle {
+  color: var(--modal-text-main);
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.28px;
+}
+
+/* Container for background options */
+.filtersModal__bgWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Background item (square thumbnail) */
+.filtersModal__bgItem {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 250ms linear;
+  background-color: var(--modal-bg-secondary);
+}
+
+/* Hover/active state for background items */
+.filtersModal__bgItem:hover {
+  transform: scale(1.1);
+}
+
+.filtersModal__bgItem.active {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 2px var(--modal-accent-color);
+}
+
+/* Priority section styles */
+.filtersModal__radioBtnWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.filtersModal__priorityWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* Priority label (color dot) */
+.filtersModal__priorityLabel {
+  display: flex;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: all 250ms linear;
+}
+
+/* Priority label active state */
+.filtersModal__priorityLabel.active {
+  border-color: var(--modal-accent-color);
+}
+
+/* Priority dot color (static classes for each priority) */
+.filtersModal__priorityDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  transition: all 250ms linear;
+}
+
+/* Priority dot colors (use these classes dynamically) */
+.filtersModal__priorityDot--without {
+  background-color: rgb(128, 128, 128);
+}
+
+.filtersModal__priorityDot--low {
+  background-color: rgba(143, 161, 208, 1);
+}
+
+.filtersModal__priorityDot--medium {
+  background-color: rgba(224, 156, 181, 1);
+}
+
+.filtersModal__priorityDot--high {
+  background-color: rgba(190, 219, 176, 1);
+}
+
+/* Priority text styling */
+.filtersModal__priorityText {
+  color: var(--modal-text-secondary);
+  font-size: 12px;
+  font-family: "Poppins", sans-serif;
+  transition: color 250ms linear;
+}
+
+.filtersModal__priorityText.active {
+  color: var(--modal-text-main);
+}
+
+/* "Show all" label (underlined text) */
+.filtersModal__showAllLabel {
+  color: var(--modal-text-secondary);
+  font-size: 12px;
+  font-family: "Poppins", sans-serif;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+/* Modal form container */
+.filtersModal__modalForm {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Accessibility fix for hidden radio inputs */
+.filtersModal__hiddenInput {
+  display: none;
+}

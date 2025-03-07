@@ -1,23 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '../api/axiosInstance.js';
+import axiosInstance from '../api/axiosInstance.js'; // Add .js extension
 
-// Fetch boards from backend
 export const fetchBoards = createAsyncThunk('boards/fetchBoards', async () => {
-  const response = await axiosInstance.get('/boards');
+  const response = await axiosInstance.get('/api/boards');
   return response.data;
 });
 
-// Create or edit a board
-export const saveBoard = createAsyncThunk('boards/saveBoard', async board => {
-  const response = board.id
-    ? await axiosInstance.put(`/boards/${board.id}`, board) // Edit
-    : await axiosInstance.post('/boards', board); // Create
+export const saveBoard = createAsyncThunk('boards/saveBoard', async (board) => {
+  const response = board._id 
+    ? await axiosInstance.put(`/api/boards/${board._id}`, board)
+    : await axiosInstance.post('/api/boards', board);
   return response.data;
 });
 
-// Delete a board
-export const deleteBoard = createAsyncThunk('boards/deleteBoard', async id => {
-  await axiosInstance.delete(`/boards/${id}`);
+export const deleteBoard = createAsyncThunk('boards/deleteBoard', async (id) => {
+  await axiosInstance.delete(`/api/boards/${id}`);
   return id;
 });
 
@@ -28,32 +25,25 @@ const boardsSlice = createSlice({
     loading: false,
     error: null,
   },
-  reducers: {},
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(fetchBoards.pending, state => {
+      .addCase(fetchBoards.pending, (state) => {
         state.loading = true;
       })
       .addCase(fetchBoards.fulfilled, (state, action) => {
         state.loading = false;
         state.boards = action.payload;
       })
-      .addCase(fetchBoards.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      })
       .addCase(saveBoard.fulfilled, (state, action) => {
-        const existingIndex = state.boards.findIndex(
-          b => b.id === action.payload.id
-        );
-        if (existingIndex !== -1) {
-          state.boards[existingIndex] = action.payload;
+        const index = state.boards.findIndex(b => b._id === action.payload._id);
+        if (index !== -1) {
+          state.boards[index] = action.payload;
         } else {
           state.boards.push(action.payload);
         }
       })
       .addCase(deleteBoard.fulfilled, (state, action) => {
-        state.boards = state.boards.filter(b => b.id !== action.payload);
+        state.boards = state.boards.filter(b => b._id !== action.payload);
       });
   },
 });

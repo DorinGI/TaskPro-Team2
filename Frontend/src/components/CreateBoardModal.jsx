@@ -1,10 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useFormik } from "formik";
+import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { saveBoard } from "../redux/boardsSlice";
-import Modal from "./Modal";
+import Modal from "./Modals/Modal.jsx";
 import styles from "./CreateBoardModal.module.css";
+
+const validationSchema = Yup.object({
+  title: Yup.string()
+    .required("Title is required")
+    .min(1, "Must be at least 1 character")
+    .max(50, "Maximum 50 characters"),
+});
 
 const iconOptions = [
   { value: "icon-project" },
@@ -32,8 +40,7 @@ const backgroundOptions = [
   },
   {
     value: "bg3",
-    image:
-      process.env.PUBLIC_URL + "/boarder_backgrounds/icon-flowering-tree.png",
+    image: process.env.PUBLIC_URL + "/boarder_backgrounds/icon-flowering-tree.png",
   },
   {
     value: "bg4",
@@ -41,10 +48,8 @@ const backgroundOptions = [
   },
   {
     value: "bg5",
-    image:
-      process.env.PUBLIC_URL + "/boarder_backgrounds/icon-green-leaves.png",
+    image: process.env.PUBLIC_URL + "/boarder_backgrounds/icon-green-leaves.png",
   },
-
   {
     value: "bg6",
     image: process.env.PUBLIC_URL + "/boarder_backgrounds/icon-clouds.png",
@@ -53,7 +58,6 @@ const backgroundOptions = [
     value: "bg7",
     image: process.env.PUBLIC_URL + "/boarder_backgrounds/icon-strait.png",
   },
-
   {
     value: "bg8",
     image: process.env.PUBLIC_URL + "/boarder_backgrounds/icon-sphere.png",
@@ -93,39 +97,24 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
 
   const formik = useFormik({
     initialValues: {
-      title: boardToEdit ? boardToEdit.title : "",
-      icon: boardToEdit ? boardToEdit.icon : iconOptions[0].value,
-      background: boardToEdit
-        ? boardToEdit.background
-        : backgroundOptions[0].value,
+      title: boardToEdit?.title || "",
+      icon: boardToEdit?.icon || iconOptions[0].value,
+      background: boardToEdit?.background || backgroundOptions[0].value,
     },
+    validationSchema,
     onSubmit: async (values) => {
-      if (!values.title.trim()) return;
-
-      await dispatch(
-        saveBoard({ ...values, id: boardToEdit ? boardToEdit.id : undefined })
-      );
-
-      onClose();
-    },
-    validate: (values) => {
-      const errors = {};
-      if (!values.title.trim()) {
-        errors.title = "Title required";
+      try {
+        await dispatch(saveBoard({
+          ...values,
+          _id: boardToEdit?._id, // Use _id instead of id
+        }));
+        onClose();
+      } catch (error) {
+        console.error("Failed to save board:", error);
       }
-      return errors;
     },
+    enableReinitialize: true,
   });
-
-  useEffect(() => {
-    if (boardToEdit) {
-      formik.setValues({
-        title: boardToEdit.title,
-        icon: boardToEdit.icon,
-        background: boardToEdit.background,
-      });
-    }
-  }, [boardToEdit, formik]);
 
   return (
     <Modal
@@ -133,79 +122,84 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
       onClose={onClose}
       title={boardToEdit ? "Edit Board" : "New Board"}
     >
-      <form onSubmit={formik.handleSubmit}>
-        <div className={styles.modalBody}>
-          <div>
-            <input
-              name="title"
-              placeholder="Title"
-              value={formik.values.title}
-              onChange={formik.handleChange}
-              className={`${styles.inputField} ${
-                formik.errors.title ? styles.inputFieldError : ""
-              }`}
-            />
-            {formik.errors.title && (
-              <div style={{ color: "red" }}>{formik.errors.title}</div>
-            )}
-          </div>
-          <h3 className={styles.title}>Icons</h3>
-          <div className={styles.radioGroup}>
+      <form onSubmit={formik.handleSubmit} className={styles.form}>
+        <div className={styles.formGroup}>
+          <input
+            type="text"
+            name="title"
+            placeholder="Board title"
+            value={formik.values.title}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`${styles.input} ${
+              formik.touched.title && formik.errors.title ? styles.error : ""
+            }`}
+          />
+          {formik.touched.title && formik.errors.title && (
+            <div className={styles.errorMessage}>
+              {formik.errors.title}
+            </div>
+          )}
+        </div>
+
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>Choose Icon</h3>
+          <div className={styles.iconGrid}>
             {iconOptions.map((icon) => (
-              <label key={icon.value} className={styles.radioLabel}>
+              <label key={icon.value} className={styles.iconOption}>
                 <input
                   type="radio"
                   name="icon"
                   value={icon.value}
-                  onChange={formik.handleChange}
                   checked={formik.values.icon === icon.value}
+                  onChange={formik.handleChange}
                   className={styles.hiddenRadio}
                 />
                 <div
                   className={`${styles.iconContainer} ${
-                    formik.values.icon === icon.value ? styles.selectedIcon : ""
+                    formik.values.icon === icon.value ? styles.selected : ""
                   }`}
                 >
-                  <svg className={styles.icon} fill="currentColor">
-                    <use xlinkHref={`/icons/symbol-defs.svg#${icon.value}`} />
+                  <svg className={styles.icon}>
+                    <use href={`/icons/symbol-defs.svg#${icon.value}`} />
                   </svg>
                 </div>
               </label>
             ))}
           </div>
-          <h3 className={styles.title}>Background</h3>
+        </div>
+
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>Background</h3>
           <div className={styles.backgroundGrid}>
             {backgroundOptions.map((bg) => (
-              <label key={bg.value} className={styles.radioLabel}>
+              <label key={bg.value} className={styles.backgroundOption}>
                 <input
                   type="radio"
                   name="background"
                   value={bg.value}
-                  onChange={formik.handleChange}
                   checked={formik.values.background === bg.value}
+                  onChange={formik.handleChange}
                   className={styles.hiddenRadio}
                 />
                 <div
-                  className={`${styles.backgroundContainer} ${
-                    formik.values.background === bg.value
-                      ? styles.selectedBackground
-                      : ""
+                  className={`${styles.backgroundPreview} ${
+                    formik.values.background === bg.value ? styles.selected : ""
                   }`}
                   style={{ backgroundImage: `url(${bg.image})` }}
-                ></div>
+                />
               </label>
             ))}
           </div>
-
-          <button
-            type="submit"
-            className={styles.createButton}
-            disabled={!formik.isValid || formik.isSubmitting}
-          >
-            <div className={styles.plusBox}>+</div>
-            {boardToEdit ? "Update" : "Create"}
-          </button>
         </div>
+
+        <button
+          type="submit"
+          className={styles.submitButton}
+          disabled={!formik.isValid || formik.isSubmitting}
+        >
+          {boardToEdit ? "Update Board" : "Create Board"}
+        </button>
       </form>
     </Modal>
   );
@@ -214,7 +208,12 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
 CreateBoardModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  boardToEdit: PropTypes.object,
+  boardToEdit: PropTypes.shape({
+    _id: PropTypes.string,
+    title: PropTypes.string,
+    icon: PropTypes.string,
+    background: PropTypes.string,
+  }),
 };
 
 export default CreateBoardModal;

@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import PropTypes from "prop-types";
 import styles from "./HelpModal.module.css";
-import Modal from "./Modal";
+import Modal from "./Modals/Modal.jsx";
 
 const HelpModal = ({ isOpen, onClose }) => {
   const [userEmail, setUserEmail] = useState("");
