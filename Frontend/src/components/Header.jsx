@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUser } from '../redux/auth/authSlice';
-import { ModalUser } from '../components/ModalUser/ModalUser';
+import EditProfileModal from './ModalUser/EditProfileModal';
 import styles from './Header.module.css';
 
 const Header = () => {
@@ -34,11 +34,7 @@ const Header = () => {
 
       {/* Afișează modalul dacă este deschis */}
       {isModalOpen && (
-        <ModalUser onClose={() => setIsModalOpen(false)}>
-          <h2>{user?.name}</h2>
-          <p>Email: {user?.email}</p>
-          <button onClick={() => setIsModalOpen(false)}>Close</button>
-        </ModalUser>
+        <EditProfileModal closeModal={() => setIsModalOpen(false)} />
       )}
     </header>
   );
