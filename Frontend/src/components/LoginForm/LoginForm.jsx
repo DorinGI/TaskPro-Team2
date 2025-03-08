@@ -8,7 +8,8 @@ import { loginUser } from '../../redux/auth/authSlice';
 
 const validationSchema = Yup.object({
   email: Yup.string()
-    .email('Adresa de e-mail nu este validă')
+    .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Adresa de e-mail nu este validă')
+    .required('E-mailul este obligatoriu')
     .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Adresa de e-mail nu este validă')
     .required('Adresa de e-mail este obligatorie'),
   password: Yup.string()

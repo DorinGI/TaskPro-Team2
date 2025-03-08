@@ -8,10 +8,16 @@ export const registerUser = async (req, res) => {
 
   try {
     let user = await User.findOne({ email });
-    if (user) return res.status(400).json({ msg: 'User already exists' });
+    if (user) {
+      console.log("🚨 [SERVER] User already exists!"); // 🛠️ Debugging backend
+      return res.status(400).json({ msg: "User already exists" });
+    }
 
     let existingUserName = await User.findOne({ name });
-    if (existingUserName) return res.status(400).json({ msg: 'Username is already taken' });
+    if (existingUserName) {
+      console.log("🚨 [SERVER] Username already taken!"); // 🛠️ Debugging backend
+      return res.status(400).json({ msg: "Username is already taken" });
+    }
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -19,15 +25,24 @@ export const registerUser = async (req, res) => {
     user = new User({ name, email, password: hashedPassword });
     await user.save();
 
-    res.status(201).json({ msg: 'User successfully registered' });
+    console.log("✅ [SERVER] User successfully registered!"); // 🛠️ Debugging backend
+    res.status(201).json({ msg: "User successfully registered" });
   } catch (error) {
-    res.status(500).json({ msg: 'Server Error' });
+    console.error("❌ [SERVER ERROR]:", error);
+    res.status(500).json({ msg: "Server Error" });
   }
 };
 
 // Autentificare utilizator
 export const loginUser = async (req, res) => {
+  console.log("🔑 [LOGIN REQUEST BODY]:", req.body); // 🔍 Debugging
+
   const { email, password } = req.body;
+
+  // 🔹 Validăm datele de login
+  if (!email || !password) {
+    return res.status(400).json({ msg: 'Email and password are required' });
+  }
 
   try {
     const user = await User.findOne({ email });
@@ -46,11 +61,13 @@ export const loginUser = async (req, res) => {
 
     res.json({ token, userId: user._id });
   } catch (error) {
-    res.status(500).json({ msg: 'Server error' });
+    console.error('❌ [LOGIN ERROR]:', error); // 🔍 Debugging
+    res.status(500).json({ msg: 'Server error. Please try again later.' });
   }
 };
 
 // Deconectare utilizator
 export const logoutUser = (req, res) => {
+  console.log("🚪 [LOGOUT] User logged out"); // 🔍 Debugging
   res.json({ msg: 'User disconnected' });
 };

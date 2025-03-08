@@ -20,18 +20,20 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
 
-// Conectăm baza de date
+// 🔥 Conectăm baza de date
 connectDB();
 
-app.use('/api', authRoutes);
-app.use('/api', userRoutes);
+// ✅ Montează corect rutele pentru backend
+app.use('/api/auth', authRoutes); // 🔥 Acum frontend-ul va putea folosi `http://localhost:5000/api/auth/register`
+app.use('/api/users', userRoutes);
 app.use('/api/boards', boardRoutes);
 app.use('/api/columns', columnRoutes);
 app.use('/api/cards', cardRoutes);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
 
+// ✅ Integrare Swagger pentru documentația API
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
@@ -50,4 +52,4 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-console.log('Swagger Docs available at http://localhost:5000/api-docs');
+console.log('📄 Swagger Docs available at http://localhost:5000/api-docs');
