@@ -44,16 +44,23 @@ const boardsSlice = createSlice({
       })
       .addCase(saveBoard.fulfilled, (state, action) => {
         const existingIndex = state.boards.findIndex(
-          b => b.id === action.payload.id
+          b => b._id === action.payload.id
         );
         if (existingIndex !== -1) {
-          state.boards[existingIndex] = action.payload;
+          state.boards = state.boards.map(b =>
+            b._id === action.payload.id ? action.payload : b
+          );
         } else {
-          state.boards.push(action.payload);
+          state.boards = [...state.boards, action.payload]; // Creează un nou array
         }
       })
       .addCase(deleteBoard.fulfilled, (state, action) => {
-        state.boards = state.boards.filter(b => b.id !== action.payload);
+        console.log('Deleted board ID:', action.payload);
+        console.log('Boards before filter:', state.boards);
+
+        state.boards = state.boards.filter(b => b._id !== action.payload);
+
+        console.log('Boards after filter:', state.boards);
       });
   },
 });

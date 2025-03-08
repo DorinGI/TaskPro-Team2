@@ -44,7 +44,7 @@ export const deleteBoard = async (req, res) => {
   try {
     await Board.findByIdAndDelete(req.params.id);
 
-    res.status(204).json({ msg: 'Board succesfully deleted' });
+    res.status(200).json({ msg: 'Board succesfully deleted' });
   } catch (error) {
     res.status(500).json({ msg: 'Server Error' });
   }
