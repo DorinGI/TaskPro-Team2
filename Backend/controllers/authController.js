@@ -10,13 +10,16 @@ export const registerUser = async (req, res) => {
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ msg: 'User already exists' });
 
+    let existingUserName = await User.findOne({ name });
+    if (existingUserName) return res.status(400).json({ msg: 'Username is already taken' });
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     user = new User({ name, email, password: hashedPassword });
     await user.save();
 
-    res.status(201).json({ msg: 'User succesfully registered' });
+    res.status(201).json({ msg: 'User successfully registered' });
   } catch (error) {
     res.status(500).json({ msg: 'Server Error' });
   }
@@ -49,5 +52,5 @@ export const loginUser = async (req, res) => {
 
 // Deconectare utilizator
 export const logoutUser = (req, res) => {
-  res.json({ msg: 'User disconected' });
+  res.json({ msg: 'User disconnected' });
 };

@@ -1,90 +1,58 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import styles from './RegisterForm.module.css';
-import { Icon } from '../Icon/Icon';
-import { registerUser } from '../../redux/auth/authSlice';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa'; // Import eye icons
+
+const validationSchema = Yup.object({
+  name: Yup.string().min(2).max(32).required('Numele este obligatoriu'),
+  email: Yup.string().email('Adresa de e-mail nu este validă').required('E-mailul este obligatoriu'),
+  password: Yup.string().min(8).max(64).required('Parola este obligatorie'),
+});
 
 const RegisterForm = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
-  const [message, setMessage] = useState('');
-  const [isError, setIsError] = useState(false);
-  const dispatch = useDispatch();
-
-  const onSubmit = async data => {
-    try {
-      const resultAction = await dispatch(registerUser(data));
-
-      console.log('📌 Rezultat registerUser:', resultAction);
-
-      if (registerUser.fulfilled.match(resultAction)) {
-        console.log(
-          '✅ Utilizator înregistrat cu succes:',
-          resultAction.payload
-        );
-        setMessage('✅ Utilizator înregistrat cu succes!');
-        setIsError(false);
-        reset();
-      } else if (registerUser.rejected.match(resultAction)) {
-        console.error('❌ Eroare la înregistrare:', resultAction.payload);
-        setMessage(
-          resultAction.payload?.message || '❌ Eroare la înregistrare.'
-        );
-        setIsError(true);
-      }
-    } catch (error) {
-      console.error('❌ Eroare necunoscută la înregistrare:', error);
-      setMessage('❌ Eroare necunoscută la înregistrare.');
-      setIsError(true);
-    }
-  };
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <div className={styles.formWrapCont}>
-        <input
-          className={styles.formInput}
-          placeholder="Enter your name"
-          {...register('name', { required: 'Name is required' })}
-        />
-        <p className={styles.formError}>{errors.name?.message}</p>
-
-        <input
-          className={styles.formInput}
-          placeholder="Enter your email"
-          {...register('email', { required: 'Email is required' })}
-        />
-        <p className={styles.formError}>{errors.email?.message}</p>
-
-        <div className={styles.passwordWrap}>
-          <input
-            type="password"
-            className={styles.formInput}
-            placeholder="Create a password"
-            {...register('password', { required: 'Password is required' })}
-          />
-          <div className={styles.eye}>
-            <Icon id="eye" size={18} />
+    <Formik
+      initialValues={{ name: '', email: '', password: '' }}
+      validationSchema={validationSchema}
+      onSubmit={(values) => console.log(values)}
+    >
+      {() => (
+        <Form className={styles.form}>
+          <div className={styles.formWrapCont}>
+            <label>Nume</label>
+            <Field type="text" name="name" className={styles.formInput} placeholder="Enter your name" />
+            <ErrorMessage name="name" component="div" className={styles.error} />
           </div>
-        </div>
-        <p className={styles.formError}>{errors.password?.message}</p>
-      </div>
 
-      <button className={styles.submitBtn} type="submit">
-        Register Now
-      </button>
+          <div className={styles.formWrapCont}>
+            <label>Email</label>
+            <Field type="email" name="email" className={styles.formInput} placeholder="Enter your email" />
+            <ErrorMessage name="email" component="div" className={styles.error} />
+          </div>
 
-      {message && (
-        <p className={isError ? styles.errorMessage : styles.successMessage}>
-          {message}
-        </p>
+          <div className={styles.formWrapCont}>
+            <label>Parola</label>
+            <div className={styles.passwordContainer}>
+              <Field
+                type={passwordVisible ? 'text' : 'password'}
+                name="password"
+                className={styles.formInput}
+                placeholder="Create a password"
+              />
+              <span className={styles.eyeIconRight} onClick={() => setPasswordVisible(!passwordVisible)}>
+                {passwordVisible ? <FaRegEyeSlash size={20} /> : <FaRegEye size={20} />}
+              </span>
+            </div>
+            <ErrorMessage name="password" component="div" className={styles.error} />
+          </div>
+
+          <button type="submit" className={styles.submitButton}>Register Now</button>
+        </Form>
       )}
-    </form>
+    </Formik>
   );
 };
 

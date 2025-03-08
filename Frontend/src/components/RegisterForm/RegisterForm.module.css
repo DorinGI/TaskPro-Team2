@@ -64,3 +64,179 @@
   font-size: 14px;
   margin-top: 10px;
 }
+
+.passwordContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.eyeIconRight {
+  position: absolute;
+  right: 14px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.submitButton {
+  background-color: #bedbb0;
+  color: #151515;
+  font-weight: bold;
+  border-radius: 8px;
+  height: 49px;
+}
+
+
+.eyeIconRight {
+  position: absolute;
+  right: 14px;
+  cursor: pointer;
+  color: #ffffff;
+  z-index: 10; /* Ensure it is above the input field */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.passwordContainer input {
+  cursor: text; /* Ensure input field is accessible */
+  padding-right: 40px; /* Space for eye icon */
+}
+
+
+.eyeIconRight {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #ffffff;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.passwordContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordContainer input {
+  cursor: text;
+  padding-right: 50px; /* Ensures space for eye icon */
+}
+
+
+.eyeIconRight {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #bedbb0; /* Ensuring contrast against dark background */
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  opacity: 1; /* Make sure it's fully visible */
+  pointer-events: all; /* Ensure it's clickable */
+}
+
+.eyeIconRight svg {
+  width: 20px;
+  height: 20px;
+  fill: #bedbb0; /* Ensuring the icon is visible */
+}
+
+.passwordContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordContainer input {
+  cursor: text;
+  padding-right: 50px; /* Ensures space for eye icon */
+}
+
+
+.eyeIconRight {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.5); /* Same as placeholder text */
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  opacity: 1; /* Ensure visibility */
+  pointer-events: all; /* Ensure it's clickable */
+}
+
+.eyeIconRight svg {
+  width: 20px;
+  height: 20px;
+  fill: rgba(255, 255, 255, 0.5); /* Same color as placeholder text */
+}
+
+.passwordContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordContainer input {
+  cursor: text;
+  padding-right: 50px; /* Ensures space for eye icon */
+  color: #ffffff;
+  font-size: 16px;
+}
+
+
+.eyeIconRight {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #FFFFFF; /* Pure white */
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  opacity: 1; /* Ensure full visibility */
+  pointer-events: all; /* Ensure it's clickable */
+}
+
+.eyeIconRight svg {
+  width: 20px;
+  height: 20px;
+  fill: #FFFFFF; /* Pure white */
+}
+
+.passwordContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordContainer input {
+  cursor: text;
+  padding-right: 50px; /* Space for eye icon */
+  color: #ffffff;
+  font-size: 16px;
+}

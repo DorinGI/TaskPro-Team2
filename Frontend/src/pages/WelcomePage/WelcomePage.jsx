@@ -18,8 +18,8 @@ const WelcomePage = () => {
             />
           </div>
           <div className={styles.logoCont}>
-            <Icon id="logo" size={48} />
-            <h1 className={styles.logoContName}>Task Pro</h1>
+           <Icon id="logo" size={48} className={styles.icon} />
+           <h1 className={styles.logoContName}>Task Pro</h1>
           </div>
           <p className={styles.description}>
             Supercharge your productivity and take control of your tasks with
