@@ -2,3 +2,5 @@ node_modules/
 frontend/frontend.zip
 backend/backend.zip
 *.log
+.env
+
