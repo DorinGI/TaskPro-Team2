@@ -1,33 +1,33 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import axios from "axios";
-import styles from "./ModalAddColumn.module.css";
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import styles from './ModalAddColumn.module.css';
 
 const ModalAddColumn = ({ isOpen, onClose, onColumnAdded }) => {
-  const [title, setTitle] = useState("");
-  const boardId = useSelector((state) => state.boards.selectedBoardId);
+  const [title, setTitle] = useState('');
+  const boardId = useSelector(state => state.boards.selectedBoardId);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     if (!title.trim()) {
-      alert("Title cannot be empty!");
+      alert('Title cannot be empty!');
       return;
     }
 
     if (!boardId) {
-      alert("No board selected!");
+      alert('No board selected!');
       return;
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/columns", {
+      const response = await axios.post('http://localhost:5000/api/columns', {
         title,
         boardId,
       });
       onColumnAdded(response.data);
       onClose();
     } catch (error) {
-      console.error("Error adding column:", error);
+      console.error('Error adding column:', error);
     }
   };
 
@@ -42,7 +42,7 @@ const ModalAddColumn = ({ isOpen, onClose, onColumnAdded }) => {
             type="text"
             placeholder="Title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={e => setTitle(e.target.value)}
             required
           />
           <button type="submit">Add</button>

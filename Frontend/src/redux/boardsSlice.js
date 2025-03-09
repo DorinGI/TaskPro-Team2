@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../api/axiosInstance.js";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axiosInstance from '../api/axiosInstance.js';
 
 export const fetchBoards = createAsyncThunk('boards/fetchBoards', async () => {
   const response = await axiosInstance.get('/boards');
@@ -19,15 +19,24 @@ export const deleteBoard = createAsyncThunk('boards/deleteBoard', async id => {
 });
 
 const boardsSlice = createSlice({
-  name: "boards",
+  name: 'boards',
   initialState: {
     boards: [],
     loading: false,
     error: null,
+    selectedBoardId: null,
+  },
+  reducers: {
+    setSelectedBoardId: (state, action) => {
+      state.selectedBoardId = action.payload;
+    },
+    resetSelectedBoardId: state => {
+      state.selectedBoardId = null;
+    },
   },
   extraReducers: builder => {
     builder
-      .addCase(fetchBoards.pending, (state) => {
+      .addCase(fetchBoards.pending, state => {
         state.loading = true;
       })
       .addCase(fetchBoards.fulfilled, (state, action) => {
@@ -50,4 +59,5 @@ const boardsSlice = createSlice({
   },
 });
 
+export const { setSelectedBoardId, resetSelectedBoardId } = boardsSlice.actions;
 export default boardsSlice.reducer;

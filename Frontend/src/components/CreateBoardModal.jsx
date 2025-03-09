@@ -124,7 +124,6 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
       });
     }
   }, [boardToEdit]);
-  console.log('BoardToEdit:', boardToEdit);
 
   return (
     <Modal

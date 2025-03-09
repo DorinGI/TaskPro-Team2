@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBoards, saveBoard, deleteBoard } from '../redux/boardsSlice';
+import {
+  fetchBoards,
+  saveBoard,
+  deleteBoard,
+  setSelectedBoardId,
+  resetSelectedBoardId,
+} from '../redux/boardsSlice';
 import { logout } from '../redux/auth/authSlice';
 import { Icon } from '../components/Icon/Icon';
 import sprite from '../assets/sprite.svg';
@@ -12,12 +18,21 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
-  const { boards, loading } = useSelector(state => state.boards);
+  const { boards, loading, selectedBoardId } = useSelector(
+    state => state.boards
+  );
   const [selectedBoard, setSelectedBoard] = useState(null);
 
   useEffect(() => {
     dispatch(fetchBoards());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedBoardId) {
+      const board = boards.find(board => board._id === selectedBoardId);
+      setSelectedBoard(board);
+    }
+  }, [selectedBoardId, boards]);
 
   const toggleModal = modalName => {
     if (modalName === 'create') {
@@ -37,6 +52,10 @@ const Sidebar = () => {
 
   const handleLogout = async () => {
     await dispatch(logout());
+  };
+
+  const handleBoardClick = boardId => {
+    dispatch(setSelectedBoardId(boardId));
   };
 
   return (
@@ -59,7 +78,13 @@ const Sidebar = () => {
       {loading && <p>Loading...</p>}
       <ul className={styles.boardList}>
         {boards.map(board => (
-          <li key={board._id} className={styles.boardItem}>
+          <li
+            key={board._id}
+            className={`${styles.boardItem} ${
+              selectedBoardId === board._id ? styles.selectedBoard : ''
+            }`}
+            onClick={() => handleBoardClick(board._id)}
+          >
             <svg className={styles.boardIcon} aria-hidden="true">
               <use xlinkHref={`${sprite}#${board.icon}`} />
             </svg>
@@ -67,7 +92,7 @@ const Sidebar = () => {
             <button
               className={styles.editButton}
               onClick={() => {
-                setSelectedBoard(board);
+                dispatch(setSelectedBoardId(board._id));
                 setIsModalOpen(true);
               }}
             >
@@ -97,7 +122,7 @@ const Sidebar = () => {
         isOpen={isModalOpen}
         onClose={() => {
           setIsModalOpen(false);
-          setSelectedBoard(null);
+          dispatch(resetSelectedBoardId());
         }}
         onCreate={values => dispatch(saveBoard(values))}
         boardToEdit={selectedBoard}
