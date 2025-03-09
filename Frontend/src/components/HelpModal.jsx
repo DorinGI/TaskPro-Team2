@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import PropTypes from "prop-types";
+import axios from "axios";
 import styles from "./HelpModal.module.css";
 import Modal from "./Modal";
 
@@ -13,6 +14,7 @@ const HelpModal = ({ isOpen, onClose }) => {
       email: userEmail || "",
       comment: "",
     },
+    enableReinitialize: true,
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Invalid email address")
@@ -21,25 +23,34 @@ const HelpModal = ({ isOpen, onClose }) => {
         .required("Message is required")
         .min(10, "Message must be at least 10 characters"),
     }),
-    onSubmit: (values) => {
-      // Aici poți trimite cererea către server
-      console.log("Form submitted:", values);
-      // De exemplu, trimite cererea la server:
-      // axios.post('/api/help', values);
-      onClose(); // Închide modalul după trimiterea formularului
+    onSubmit: async (values, { setSubmitting }) => {
+      try {
+        await axios.post("/api/help", values);
+        console.log("Form submitted:", response.data);
+        onClose();
+      } catch (error) {
+        console.error("Error sending request:", error.response?.data || error);
+      } finally {
+        setSubmitting(false);
+      }
     },
   });
 
+  useEffect(() => {
+    if (userEmail) {
+      formik.setFieldValue("email", userEmail);
+    }
+  }, [userEmail]);
   // Funcția de succes pentru Google Login
-  const handleLoginSuccess = (response) => {
-    const email = response?.credential?.email;
-    setUserEmail(email); // Setează email-ul utilizatorului în state pentru a-l pre-popula în formular
-  };
+  // const handleLoginSuccess = (response) => {
+  //  const email = response?.credential?.email;
+  //  setUserEmail(email); // Setează email-ul utilizatorului în state pentru a-l pre-popula în formular
+  // };
 
   // Funcția de eșec pentru Google Login
-  const handleLoginFailure = (error) => {
-    console.log("Login failed:", error);
-  };
+  // const handleLoginFailure = (error) => {
+  //  console.log("Login failed:", error);
+  //};
 
   return (
     <Modal
@@ -64,7 +75,7 @@ const HelpModal = ({ isOpen, onClose }) => {
             }
           />
           {formik.touched.email && formik.errors.email ? (
-            <div className="error-message">{formik.errors.email}</div>
+            <div className={styles.errorMessage}>{formik.errors.email}</div>
           ) : null}
         </div>
 
@@ -82,12 +93,16 @@ const HelpModal = ({ isOpen, onClose }) => {
             }
           />
           {formik.touched.comment && formik.errors.comment ? (
-            <div className="error-comment">{formik.errors.comment}</div>
+            <div className={styles.errorMessage}>{formik.errors.comment}</div>
           ) : null}
         </div>
 
-        <button type="submit" className={styles.submitButton}>
-          Send
+        <button
+          type="submit"
+          className={styles.submitButton}
+          disabled={formik.isSubmitting}
+        >
+          {formik.isSubmitting ? "Sending..." : "Send"}
         </button>
       </form>
     </Modal>
