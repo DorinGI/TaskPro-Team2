@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ColumnTask from '../ColumnTask/ColumnTask.jsx';
-import ModalAddColumn from '../ModalAddColumn/ModalAddColumn.jsx';
+import ModalAddColumn from '../ModalAddEditColumn/ModalAddEditColumn.jsx';
 import { fetchColumns, createColumn } from '../../redux/columnSlice.js';
 import styles from './MainDashboard.module.css';
 

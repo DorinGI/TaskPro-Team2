@@ -20,8 +20,24 @@ export const getColumnsByBoard = async (req, res) => {
 // Creare coloană
 export const createColumn = async (req, res) => {
   const { title, boardId } = req.body;
+  console.log('Request body:', req.body);
   try {
-    const newColumn = new Column({ title, boardId });
+    // Verifică dacă există deja o coloană cu același boardId și title
+    const existingColumn = await Column.findOne({ title, boardId });
+    if (existingColumn) {
+      return res.status(400).json({
+        message: 'Column with this title already exists for this board',
+      });
+    }
+
+    const existingColumnsCount = await Column.countDocuments({ boardId });
+
+    const newColumn = new Column({
+      title,
+      boardId,
+      order: existingColumnsCount,
+    });
+    console.log('Saving new column:', newColumn);
     await newColumn.save();
     res.status(201).json(newColumn);
   } catch (error) {

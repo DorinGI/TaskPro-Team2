@@ -1,11 +1,29 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { createCard } from '../../redux/cardSlice';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import styles from './ModalAddEditCard.module.css';
 
 const labelColors = ['blue', 'red', 'green', 'gray'];
 
-const ModalAddCard = ({ open, onClose, onSave, cardToEdit }) => {
+const ModalAddCard = ({ open, onClose, columnId, cardToEdit }) => {
+  const dispatch = useDispatch();
+
+  const handleSave = values => {
+    if (!values.title.trim()) return;
+
+    const cardData = {
+      title: values.title,
+      description: values.description,
+      labelColor: values.labelColor,
+      deadline: values.deadline,
+      columnId: columnId,
+    };
+
+    dispatch(createCard(cardData));
+    onClose();
+  };
   const formik = useFormik({
     initialValues: {
       title: cardToEdit ? cardToEdit.title : '',
@@ -15,9 +33,10 @@ const ModalAddCard = ({ open, onClose, onSave, cardToEdit }) => {
     },
     onSubmit: values => {
       if (!values.title.trim()) return;
-      onSave({ ...values, id: cardToEdit ? cardToEdit._id : undefined });
+      onSave(cardData);
       onClose();
     },
+    onSubmit: handleSave,
     validate: values => {
       const errors = {};
       if (!values.title.trim()) errors.title = 'Title is required';
@@ -114,6 +133,7 @@ const ModalAddCard = ({ open, onClose, onSave, cardToEdit }) => {
 ModalAddCard.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  columnId: PropTypes.string.isRequired,
   onSave: PropTypes.func.isRequired,
   cardToEdit: PropTypes.shape({
     _id: PropTypes.string,

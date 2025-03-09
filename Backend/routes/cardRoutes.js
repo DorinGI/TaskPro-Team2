@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.get('columns/:columnId/cards', getCardsByColumn);
+router.get('/column/:columnId', getCardsByColumn);
 /**
  * @swagger
  * tags:
