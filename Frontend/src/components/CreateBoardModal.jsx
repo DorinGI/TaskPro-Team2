@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
@@ -5,6 +6,13 @@ import { useDispatch } from 'react-redux';
 import { saveBoard } from '../redux/boardsSlice';
 import Modal from './Modal';
 import styles from './CreateBoardModal.module.css';
+
+const validationSchema = Yup.object({
+  title: Yup.string()
+    .required("Title is required")
+    .min(1, "Must be at least 1 character")
+    .max(50, "Maximum 50 characters"),
+});
 
 const iconOptions = [
   { value: 'icon-project' },
@@ -31,20 +39,23 @@ const backgroundOptions = [
     image: process.env.PUBLIC_URL + '/boarder_backgrounds/icon-starry-sky.png',
   },
   {
+
     value: 'bg3',
     image:
       process.env.PUBLIC_URL + '/boarder_backgrounds/icon-flowering-tree.png',
+
   },
   {
     value: 'bg4',
     image: process.env.PUBLIC_URL + '/boarder_backgrounds/icon-crescend.png',
   },
   {
+
     value: 'bg5',
     image:
       process.env.PUBLIC_URL + '/boarder_backgrounds/icon-green-leaves.png',
-  },
 
+  },
   {
     value: 'bg6',
     image: process.env.PUBLIC_URL + '/boarder_backgrounds/icon-clouds.png',
@@ -53,7 +64,6 @@ const backgroundOptions = [
     value: 'bg7',
     image: process.env.PUBLIC_URL + '/boarder_backgrounds/icon-strait.png',
   },
-
   {
     value: 'bg8',
     image: process.env.PUBLIC_URL + '/boarder_backgrounds/icon-sphere.png',
@@ -93,6 +103,7 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
 
   const formik = useFormik({
     initialValues: {
+
       title: boardToEdit ? boardToEdit.title : '',
       icon: boardToEdit ? boardToEdit.icon : iconOptions[0].value,
       background: boardToEdit
@@ -113,8 +124,8 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
       if (!values.title.trim()) {
         errors.title = 'Title required';
       }
-      return errors;
     },
+    enableReinitialize: true,
   });
 
   useEffect(() => {
@@ -127,6 +138,7 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
     }
   }, [boardToEdit]);
   console.log('BoardToEdit:', boardToEdit);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -157,8 +169,8 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
                   type="radio"
                   name="icon"
                   value={icon.value}
-                  onChange={formik.handleChange}
                   checked={formik.values.icon === icon.value}
+                  onChange={formik.handleChange}
                   className={styles.hiddenRadio}
                 />
                 <div
@@ -166,14 +178,17 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
                     formik.values.icon === icon.value ? styles.selectedIcon : ''
                   }`}
                 >
-                  <svg className={styles.icon} fill="currentColor">
-                    <use xlinkHref={`/icons/symbol-defs.svg#${icon.value}`} />
+                  <svg className={styles.icon}>
+                    <use href={`/icons/symbol-defs.svg#${icon.value}`} />
                   </svg>
                 </div>
               </label>
             ))}
           </div>
-          <h3 className={styles.title}>Background</h3>
+        </div>
+
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>Background</h3>
           <div className={styles.backgroundGrid}>
             {backgroundOptions.map(bg => (
               <label key={bg.value} className={styles.radioLabel}>
@@ -181,8 +196,8 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
                   type="radio"
                   name="background"
                   value={bg.value}
-                  onChange={formik.handleChange}
                   checked={formik.values.background === bg.value}
+                  onChange={formik.handleChange}
                   className={styles.hiddenRadio}
                 />
                 <div
@@ -192,11 +207,10 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
                       : ''
                   }`}
                   style={{ backgroundImage: `url(${bg.image})` }}
-                ></div>
+                />
               </label>
             ))}
           </div>
-
           <button
             type="submit"
             className={styles.createButton}
@@ -206,6 +220,14 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
             {boardToEdit ? 'Update' : 'Create'}
           </button>
         </div>
+
+        <button
+          type="submit"
+          className={styles.submitButton}
+          disabled={!formik.isValid || formik.isSubmitting}
+        >
+          {boardToEdit ? "Update Board" : "Create Board"}
+        </button>
       </form>
     </Modal>
   );
@@ -214,7 +236,12 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
 CreateBoardModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  boardToEdit: PropTypes.object,
+  boardToEdit: PropTypes.shape({
+    _id: PropTypes.string,
+    title: PropTypes.string,
+    icon: PropTypes.string,
+    background: PropTypes.string,
+  }),
 };
 
 export default CreateBoardModal;

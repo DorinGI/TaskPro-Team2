@@ -38,6 +38,7 @@ const Sidebar = () => {
   const handleLogout = async () => {
     await dispatch(logout());
   };
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.logoCont}>
@@ -85,7 +86,10 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      <button className={styles.needHelp} onClick={() => toggleModal('help')}>
+      <button 
+        className={styles.needHelp} 
+        onClick={() => setIsHelpModalOpen(true)}
+      >
         Need Help?
       </button>
       <button className={styles.logout} onClick={handleLogout}>
@@ -101,7 +105,6 @@ const Sidebar = () => {
         onCreate={values => dispatch(saveBoard(values))}
         boardToEdit={selectedBoard}
       />
-      <HelpModal isOpen={isHelpModalOpen} onClose={() => closeModal('help')} />
     </aside>
   );
 };
