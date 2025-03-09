@@ -35,15 +35,22 @@ const boardsSlice = createSlice({
         state.boards = action.payload;
       })
       .addCase(saveBoard.fulfilled, (state, action) => {
-        const index = state.boards.findIndex(b => b._id === action.payload._id);
-        if (index !== -1) {
-          state.boards[index] = action.payload;
+        const existingIndex = state.boards.findIndex(
+          b => b._id === action.payload._id
+        );
+        if (existingIndex !== -1) {
+          state.boards[existingIndex] = action.payload;
         } else {
-          state.boards.push(action.payload);
+          state.boards = [...state.boards, action.payload];
         }
       })
       .addCase(deleteBoard.fulfilled, (state, action) => {
+        console.log('Deleted board ID:', action.payload);
+        console.log('Boards before filter:', state.boards);
+
         state.boards = state.boards.filter(b => b._id !== action.payload);
+
+        console.log('Boards after filter:', state.boards);
       });
   },
 });

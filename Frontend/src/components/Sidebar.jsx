@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoards, saveBoard, deleteBoard } from '../redux/boardsSlice';
 import { logout } from '../redux/auth/authSlice';
+import { Icon } from '../components/Icon/Icon';
 import sprite from '../assets/sprite.svg';
 import styles from './Sidebar.module.css';
 import CreateBoardModal from './CreateBoardModal';
@@ -18,12 +19,33 @@ const Sidebar = () => {
     dispatch(fetchBoards());
   }, [dispatch]);
 
+  const toggleModal = modalName => {
+    if (modalName === 'create') {
+      setIsModalOpen(true);
+    } else if (modalName === 'help') {
+      setIsHelpModalOpen(true);
+    }
+  };
+
+  const closeModal = modalName => {
+    if (modalName === 'create') {
+      setIsModalOpen(false);
+    } else if (modalName === 'help') {
+      setIsHelpModalOpen(false);
+    }
+  };
+
   const handleLogout = async () => {
     await dispatch(logout());
   };
 
   return (
     <aside className={styles.sidebar}>
+      <div className={styles.logoCont}>
+        <Icon id="logo" size={32} />
+        <p className={styles.logoName}>Task Pro</p>
+      </div>
+
       <h2>My Boards</h2>
       <div className={styles.boardHeader}>
         <span className={styles.createBoardText}>Create New Board</span>
@@ -76,12 +98,12 @@ const Sidebar = () => {
 
       <CreateBoardModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedBoard(null);
+        }}
+        onCreate={values => dispatch(saveBoard(values))}
         boardToEdit={selectedBoard}
-      />
-      <HelpModal 
-        isOpen={isHelpModalOpen} 
-        onClose={() => setIsHelpModalOpen(false)} 
       />
     </aside>
   );
