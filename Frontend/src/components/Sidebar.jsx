@@ -86,10 +86,7 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      <button 
-        className={styles.needHelp} 
-        onClick={() => setIsHelpModalOpen(true)}
-      >
+      <button className={styles.needHelp} onClick={() => toggleModal('help')}>
         Need Help?
       </button>
       <button className={styles.logout} onClick={handleLogout}>
@@ -105,6 +102,7 @@ const Sidebar = () => {
         onCreate={values => dispatch(saveBoard(values))}
         boardToEdit={selectedBoard}
       />
+      <HelpModal isOpen={isHelpModalOpen} onClose={() => closeModal('help')} />
     </aside>
   );
 };

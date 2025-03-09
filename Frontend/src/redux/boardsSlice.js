@@ -1,20 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from '../api/axiosInstance.js'; // Add .js extension
+import axiosInstance from '../api/axiosInstance.js';
 
 export const fetchBoards = createAsyncThunk('boards/fetchBoards', async () => {
-  const response = await axiosInstance.get('/api/boards');
+  const response = await axiosInstance.get('/boards');
   return response.data;
 });
 
-export const saveBoard = createAsyncThunk('boards/saveBoard', async (board) => {
-  const response = board._id 
-    ? await axiosInstance.put(`/api/boards/${board._id}`, board)
-    : await axiosInstance.post('/api/boards', board);
+export const saveBoard = createAsyncThunk('boards/saveBoard', async board => {
+  const response = board.id
+    ? await axiosInstance.put(`/boards/${board.id}`, board)
+    : await axiosInstance.post('/boards', board);
   return response.data;
 });
 
-export const deleteBoard = createAsyncThunk('boards/deleteBoard', async (id) => {
-  await axiosInstance.delete(`/api/boards/${id}`);
+export const deleteBoard = createAsyncThunk('boards/deleteBoard', async id => {
+  await axiosInstance.delete(`/boards/${id}`);
   return id;
 });
 
@@ -25,9 +25,9 @@ const boardsSlice = createSlice({
     loading: false,
     error: null,
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchBoards.pending, (state) => {
+      .addCase(fetchBoards.pending, state => {
         state.loading = true;
       })
       .addCase(fetchBoards.fulfilled, (state, action) => {
