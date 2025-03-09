@@ -44,14 +44,12 @@ const boardsSlice = createSlice({
       })
       .addCase(saveBoard.fulfilled, (state, action) => {
         const existingIndex = state.boards.findIndex(
-          b => b._id === action.payload.id
+          b => b._id === action.payload._id
         );
         if (existingIndex !== -1) {
-          state.boards = state.boards.map(b =>
-            b._id === action.payload.id ? action.payload : b
-          );
+          state.boards[existingIndex] = action.payload;
         } else {
-          state.boards = [...state.boards, action.payload]; // Creează un nou array
+          state.boards = [...state.boards, action.payload];
         }
       })
       .addCase(deleteBoard.fulfilled, (state, action) => {

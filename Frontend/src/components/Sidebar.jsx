@@ -35,10 +35,6 @@ const Sidebar = () => {
     }
   };
 
-  //   const handleCreateBoard = values => {
-  //     console.log('Board created ', values);
-  //     closeModal('create');
-  //   };
   const handleLogout = async () => {
     await dispatch(logout());
   };
@@ -62,7 +58,7 @@ const Sidebar = () => {
       {loading && <p>Loading...</p>}
       <ul className={styles.boardList}>
         {boards.map(board => (
-          <li key={board.id} className={styles.boardItem}>
+          <li key={board._id} className={styles.boardItem}>
             <svg className={styles.boardIcon} aria-hidden="true">
               <use xlinkHref={`${sprite}#${board.icon}`} />
             </svg>
@@ -98,9 +94,12 @@ const Sidebar = () => {
 
       <CreateBoardModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedBoard(null);
+        }}
         onCreate={values => dispatch(saveBoard(values))}
-        board={selectedBoard}
+        boardToEdit={selectedBoard}
       />
       <HelpModal isOpen={isHelpModalOpen} onClose={() => closeModal('help')} />
     </aside>

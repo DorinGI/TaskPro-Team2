@@ -103,7 +103,7 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
       if (!values.title.trim()) return;
 
       await dispatch(
-        saveBoard({ ...values, id: boardToEdit ? boardToEdit.id : undefined })
+        saveBoard({ ...values, id: boardToEdit ? boardToEdit._id : undefined })
       );
 
       onClose();
@@ -125,8 +125,8 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
         background: boardToEdit.background,
       });
     }
-  }, [boardToEdit, formik]);
-
+  }, [boardToEdit]);
+  console.log('BoardToEdit:', boardToEdit);
   return (
     <Modal
       isOpen={isOpen}
