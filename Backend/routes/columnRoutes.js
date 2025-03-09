@@ -1,12 +1,14 @@
-import express from "express";
+import express from 'express';
 import {
+  getColumnsByBoard,
   createColumn,
   updateColumn,
   deleteColumn,
-} from "../controllers/columnController.js";
+} from '../controllers/columnController.js';
 
 const router = express.Router();
 
+router.get('/boards/:boardId/columns', getColumnsByBoard);
 /**
  * @swagger
  * tags:
@@ -46,7 +48,7 @@ const router = express.Router();
  *       500:
  *         description: Eroare la crearea coloanei
  */
-router.post("/", createColumn);
+router.post('/', createColumn);
 
 /**
  * @swagger
@@ -81,7 +83,7 @@ router.post("/", createColumn);
  *       500:
  *         description: Eroare la actualizarea coloanei
  */
-router.put("/:id", updateColumn);
+router.put('/:id', updateColumn);
 
 /**
  * @swagger
@@ -102,6 +104,6 @@ router.put("/:id", updateColumn);
  *       500:
  *         description: Eroare la ștergerea coloanei
  */
-router.delete("/:id", deleteColumn);
+router.delete('/:id', deleteColumn);
 
 export default router;

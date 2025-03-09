@@ -3,13 +3,20 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ColumnTask from '../ColumnTask/ColumnTask.jsx';
 import ModalAddColumn from '../ModalAddColumn/ModalAddColumn.jsx';
-import { createColumn } from '../../redux/columnSlice.js';
+import { fetchColumns, createColumn } from '../../redux/columnSlice.js';
 import styles from './MainDashboard.module.css';
 
-const MainDashboard = ({ selectedBoardId }) => {
+const MainDashboard = () => {
   const dispatch = useDispatch();
+  const selectedBoardId = useSelector(state => state.boards.selectedBoardId);
   const columns = useSelector(state => state.columns.columns);
   const [isAddColumnModalOpen, setIsAddColumnModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (selectedBoardId) {
+      dispatch(fetchColumns(selectedBoardId));
+    }
+  }, [selectedBoardId, dispatch]);
 
   const filteredColumns = columns.filter(
     column => column.boardId === selectedBoardId
@@ -24,7 +31,7 @@ const MainDashboard = ({ selectedBoardId }) => {
   };
 
   const handleColumnAdded = newColumn => {
-    dispatch(createColumn(newColumn));
+    dispatch(createColumn({ ...newColumn, boardId: selectedBoardId }));
   };
 
   return (
@@ -37,7 +44,7 @@ const MainDashboard = ({ selectedBoardId }) => {
       </button>
 
       <div className={styles.columnsContainer}>
-        {filteredColumns.map(column => (
+        {columns.map(column => (
           <ColumnTask key={column._id} column={column} />
         ))}
       </div>

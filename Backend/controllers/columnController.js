@@ -1,4 +1,21 @@
-import Column from "../models/Column.js";
+import Column from '../models/Column.js';
+
+// Obține toate coloanele pentru un board
+export const getColumnsByBoard = async (req, res) => {
+  const { boardId } = req.params;
+  console.log('BoardID:', boardId);
+  try {
+    const columns = await Column.find({ boardId });
+    if (!columns) {
+      return res
+        .status(404)
+        .json({ message: 'No columns found for this board' });
+    }
+    res.status(200).json(columns);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching columns', error });
+  }
+};
 
 // Creare coloană
 export const createColumn = async (req, res) => {
@@ -8,7 +25,7 @@ export const createColumn = async (req, res) => {
     await newColumn.save();
     res.status(201).json(newColumn);
   } catch (error) {
-    res.status(500).json({ message: "Error creating column", error });
+    res.status(500).json({ message: 'Error creating column', error });
   }
 };
 
@@ -24,7 +41,7 @@ export const updateColumn = async (req, res) => {
     );
     res.status(200).json(updatedColumn);
   } catch (error) {
-    res.status(500).json({ message: "Error updating column", error });
+    res.status(500).json({ message: 'Error updating column', error });
   }
 };
 
@@ -35,6 +52,6 @@ export const deleteColumn = async (req, res) => {
     await Column.findByIdAndDelete(id);
     res.status(204).send();
   } catch (error) {
-    res.status(500).json({ message: "Error deleting column", error });
+    res.status(500).json({ message: 'Error deleting column', error });
   }
 };

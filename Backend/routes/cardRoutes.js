@@ -1,12 +1,14 @@
-import express from "express";
+import express from 'express';
 import {
+  getCardsByColumn,
   createCard,
   updateCard,
   deleteCard,
-} from "../controllers/cardController.js";
+} from '../controllers/cardController.js';
 
 const router = express.Router();
 
+router.get('columns/:columnId/cards', getCardsByColumn);
 /**
  * @swagger
  * tags:
@@ -62,7 +64,7 @@ const router = express.Router();
  *       500:
  *         description: Eroare la crearea cardului
  */
-router.post("/", createCard);
+router.post('/', createCard);
 
 /**
  * @swagger
@@ -109,7 +111,7 @@ router.post("/", createCard);
  *       500:
  *         description: Eroare la actualizarea cardului
  */
-router.put("/:id", updateCard);
+router.put('/:id', updateCard);
 
 /**
  * @swagger
@@ -130,6 +132,6 @@ router.put("/:id", updateCard);
  *       500:
  *         description: Eroare la ștergerea cardului
  */
-router.delete("/:id", deleteCard);
+router.delete('/:id', deleteCard);
 
 export default router;

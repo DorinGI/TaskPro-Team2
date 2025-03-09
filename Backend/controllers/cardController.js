@@ -1,4 +1,19 @@
-import Card from "../models/Card.js";
+import Card from '../models/Card.js';
+
+// Obține toate coloanele pentru un board
+export const getCardsByColumn = async (req, res) => {
+  const { columnId } = req.params;
+  console.log('columnId:', columnId);
+  try {
+    const cards = await Card.find({ columnId });
+    if (!cards) {
+      return res.status(404).json({ message: 'No cards found for this board' });
+    }
+    res.status(200).json(cards);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching cards', error });
+  }
+};
 
 // Creare card
 export const createCard = async (req, res) => {
@@ -14,7 +29,7 @@ export const createCard = async (req, res) => {
     await newCard.save();
     res.status(201).json(newCard);
   } catch (error) {
-    res.status(500).json({ message: "Error creating card", error });
+    res.status(500).json({ message: 'Error creating card', error });
   }
 };
 
@@ -30,7 +45,7 @@ export const updateCard = async (req, res) => {
     );
     res.status(200).json(updatedCard);
   } catch (error) {
-    res.status(500).json({ message: "Error updating card", error });
+    res.status(500).json({ message: 'Error updating card', error });
   }
 };
 
@@ -41,6 +56,6 @@ export const deleteCard = async (req, res) => {
     await Card.findByIdAndDelete(id);
     res.status(204).send();
   } catch (error) {
-    res.status(500).json({ message: "Error deleting card", error });
+    res.status(500).json({ message: 'Error deleting card', error });
   }
 };

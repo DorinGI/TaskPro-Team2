@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import sprite from '../../assets/sprite.svg';
 import styles from './ColumnTask.module.css';
-import Task from '../Task/Task.jsx';
-import ModalAddCard from '../Modals/ModalAddCard.jsx'; // Fixed path
-import { deleteColumn } from '../../redux/columnSlice.js'; // Fixed path
-import { createCard } from '../../redux/cardSlice.js'; // Fixed path
+import CardsList from '../Task/CardsList.jsx';
+import ModalAddCard from '../Modals/ModalAddEditCard.jsx';
+import { deleteColumn } from '../../redux/columnSlice.js';
+import { createCard } from '../../redux/cardSlice.js';
 
 const ColumnTask = ({ column }) => {
   const dispatch = useDispatch();
@@ -14,38 +14,29 @@ const ColumnTask = ({ column }) => {
   const handleDeleteColumn = () => {
     dispatch(deleteColumn(column._id));
   };
-
+  const handleAddCard = cardData => {
+    dispatch(createCard({ ...cardData, columnId: column._id }));
+    setOpenCardModal(false);
+  };
   const filteredColumn =
-    item.cards && item.cards.filter((card) => card.priority === "show all");
+    column.cards && column.cards.filter(card => card.priority === 'show all');
 
-  const columnLength = item.cards?.length || 0;
-  const filteredColumnLength = filteredColumn?.length || 0;
+  const columnLength = column.cards?.length || 0;
+  // const filteredColumnLength = filteredColumn?.length || 0;
 
-  const condition = columnLength;
+  // const condition = columnLength;
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.contentWrapper}>
         <div className={styles.content}>
           <div className={styles.header}>
-            <h2 className={styles.title}>{item.title}</h2>
+            <h2 className={styles.title}>{column.title}</h2>
             <div className={styles.iconWrapper}>
-              {/* Edit Button */}
-              <button
-                className={styles.editButton}
-                onClick={handleOpenColumnModal}
-              >
-                <img
-                  className={styles.editIcon}
-                  src={`${process.env.PUBLIC_URL}/assets/pencil-01.svg`}
-                  alt="Edit"
-                />
-              </button>
-
               {/* Delete Button */}
               <button
                 className={styles.deleteButton}
-                onClick={() => dispatch(deleteColumn(item._id))}
+                onClick={handleDeleteColumn}
               >
                 <img
                   className={styles.deleteIcon}
@@ -58,39 +49,25 @@ const ColumnTask = ({ column }) => {
 
           {/* Task List */}
           <ul className={styles.taskList}>
-            {item.cards?.map((card) => (
-              <Card key={card._id} item={card} columnName={item.title} />
+            {column.cards?.map(card => (
+              <CardsList key={card._id} card={card} column={column} />
             ))}
           </ul>
         </div>
 
         {/* Add Card Button */}
-        <button className={styles.addCardButton} onClick={handleOpenCardModal}>
+        <button
+          className={styles.addCardButton}
+          onClick={() => setOpenCardModal(true)}
+        >
           <img
-            src={`${process.env.PUBLIC_URL}/assets/trash-04.svg`}
-            alt="Delete"
+            src={`${process.env.PUBLIC_URL}/assets/plus.svg`}
+            alt="Add Card"
             className={styles.icon}
           />
+          Add Card
         </button>
       </div>
-
-      <ul className={styles.taskList}>
-        {column.cards?.map((card) => (
-          <Task key={card._id} card={card} column={column} />
-        ))}
-      </ul>
-
-      <button 
-        className={styles.addCardButton} 
-        onClick={() => setOpenCardModal(true)}
-      >
-        <img
-          src={`${process.env.PUBLIC_URL}/assets/plus.svg`}
-          alt="Add Card"
-          className={styles.icon}
-        />
-        Add Card
-      </button>
 
       <ModalAddCard
         open={openCardModal}
