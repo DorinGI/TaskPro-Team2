@@ -1,24 +1,18 @@
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./auth/authSlice.js";
-import boardsReducer from "./boardsSlice.js";
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './auth/authSlice.js';
+import boardsReducer from './boardsSlice.js';
+import columnReducer from './columnSlice.js'; 
+import cardReducer from './cardSlice.js';
+import themeReducer from './themeSlice.js';
 
-const initialState = {
-  theme: "Light",
-};
-
-const themeReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "SET_THEME":
-      return { ...state, theme: action.payload };
-    default:
-      return state;
-  }
-};
-
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     auth: authReducer,
-    theme: themeReducer,
     boards: boardsReducer,
+    columns: columnReducer,
+    cards: cardReducer,
+    theme: themeReducer,
   },
 });
+
+export default store; 

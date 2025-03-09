@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBoards, saveBoard, deleteBoard } from '../redux/boardsSlice';
 import { logout } from '../redux/auth/authSlice';
+import { Icon } from '../components/Icon/Icon';
 import sprite from '../assets/sprite.svg';
 import styles from './Sidebar.module.css';
 import CreateBoardModal from './CreateBoardModal';
@@ -34,15 +35,17 @@ const Sidebar = () => {
     }
   };
 
-  //   const handleCreateBoard = values => {
-  //     console.log('Board created ', values);
-  //     closeModal('create');
-  //   };
   const handleLogout = async () => {
     await dispatch(logout());
   };
+
   return (
     <aside className={styles.sidebar}>
+      <div className={styles.logoCont}>
+        <Icon id="logo" size={32} />
+        <p className={styles.logoName}>Task Pro</p>
+      </div>
+
       <h2>My Boards</h2>
       <div className={styles.boardHeader}>
         <span className={styles.createBoardText}>Create New Board</span>
@@ -56,7 +59,7 @@ const Sidebar = () => {
       {loading && <p>Loading...</p>}
       <ul className={styles.boardList}>
         {boards.map(board => (
-          <li key={board.id} className={styles.boardItem}>
+          <li key={board._id} className={styles.boardItem}>
             <svg className={styles.boardIcon} aria-hidden="true">
               <use xlinkHref={`${sprite}#${board.icon}`} />
             </svg>
@@ -92,9 +95,12 @@ const Sidebar = () => {
 
       <CreateBoardModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedBoard(null);
+        }}
         onCreate={values => dispatch(saveBoard(values))}
-        board={selectedBoard}
+        boardToEdit={selectedBoard}
       />
       <HelpModal isOpen={isHelpModalOpen} onClose={() => closeModal('help')} />
     </aside>

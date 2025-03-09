@@ -1,22 +1,19 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import sprite from "../../assets/sprite.svg";
-import styles from "./ColumnTask.module.css";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import sprite from '../../assets/sprite.svg';
+import styles from './ColumnTask.module.css';
+import Task from '../Task/Task.jsx';
+import ModalAddCard from '../Modals/ModalAddCard.jsx'; // Fixed path
+import { deleteColumn } from '../../redux/columnSlice.js'; // Fixed path
+import { createCard } from '../../redux/cardSlice.js'; // Fixed path
 
-// Redux action (Ensure this matches the export in boardsSlice.js)
-import { deleteBoard } from "../../redux/boardsSlice"; // Ensure correct path and no duplicate imports
-
-const ColumnTask = ({ item }) => {
+const ColumnTask = ({ column }) => {
   const dispatch = useDispatch();
-
-  const [openColumnModal, setOpenColumnModal] = useState(false);
   const [openCardModal, setOpenCardModal] = useState(false);
 
-  const handleOpenColumnModal = () => setOpenColumnModal(true);
-  const handleCloseColumnModal = () => setOpenColumnModal(false);
-
-  const handleOpenCardModal = () => setOpenCardModal(true);
-  const handleCloseCardModal = () => setOpenCardModal(false);
+  const handleDeleteColumn = () => {
+    dispatch(deleteColumn(column._id));
+  };
 
   const filteredColumn =
     item.cards && item.cards.filter((card) => card.priority === "show all");
@@ -48,7 +45,7 @@ const ColumnTask = ({ item }) => {
               {/* Delete Button */}
               <button
                 className={styles.deleteButton}
-                onClick={() => dispatch(deleteBoard(item._id))}
+                onClick={() => dispatch(deleteColumn(item._id))}
               >
                 <img
                   className={styles.deleteIcon}
@@ -70,35 +67,37 @@ const ColumnTask = ({ item }) => {
         {/* Add Card Button */}
         <button className={styles.addCardButton} onClick={handleOpenCardModal}>
           <img
-            className={styles.plusIcon}
-            src={`${process.env.PUBLIC_URL}/assets/plus.svg`}
-            alt="Add"
+            src={`${process.env.PUBLIC_URL}/assets/trash-04.svg`}
+            alt="Delete"
+            className={styles.icon}
           />
-          Add another card
         </button>
       </div>
 
-      {/* Modals */}
-      {/*<BasicModal
-        open={openColumnModal}
-        closeModal={handleCloseColumnModal}
-      >
-        <EditColumnModal
-          title={item.title}
-          columnId={item._id}
-          closeModal={handleCloseColumnModal}
-        />
-      </BasicModal>
+      <ul className={styles.taskList}>
+        {column.cards?.map((card) => (
+          <Task key={card._id} card={card} column={column} />
+        ))}
+      </ul>
 
-      <BasicModal
-        open={openCardModal}
-        closeModal={handleCloseCardModal}
+      <button 
+        className={styles.addCardButton} 
+        onClick={() => setOpenCardModal(true)}
       >
-        <AddCardModal
-          columnId={item._id}
-          closeModal={handleCloseCardModal}
+        <img
+          src={`${process.env.PUBLIC_URL}/assets/plus.svg`}
+          alt="Add Card"
+          className={styles.icon}
         />
-      </BasicModal>*/}
+        Add Card
+      </button>
+
+      <ModalAddCard
+        open={openCardModal}
+        onClose={() => setOpenCardModal(false)}
+        columnId={column._id}
+        onSave={handleAddCard}
+      />
     </div>
   );
 };
