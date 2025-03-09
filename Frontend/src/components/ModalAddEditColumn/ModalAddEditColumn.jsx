@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createColumn, fetchColumns } from '../../redux/columnSlice';
+import { saveColumn, fetchColumns } from '../../redux/columnSlice';
 import styles from './ModalAddEditColumn.module.css';
 
 const ModalAddColumn = ({ isOpen, onClose, columnToEdit }) => {
@@ -22,19 +22,20 @@ const ModalAddColumn = ({ isOpen, onClose, columnToEdit }) => {
       alert('Title cannot be empty!');
       return;
     }
-    if (!boardId) {
+    if (!boardId && !columnToEdit) {
       alert('No board selected!');
       return;
     }
 
     try {
-      if (columnToEdit) {
-        // Dacă avem o coloană de editat, implementăm și acțiunea update în columnSlice
-        console.log('Update functionality to be implemented in columnSlice');
-      } else {
-        await dispatch(createColumn({ title, boardId }));
-        dispatch(fetchColumns(boardId)); // Reîmprospătăm lista de coloane
-      }
+      await dispatch(
+        saveColumn({
+          title,
+          boardId, // boardId se trimite doar la adăugare
+          id: columnToEdit ? columnToEdit._id : undefined, // Dacă facem update, trimitim id-ul coloanei
+        })
+      );
+      dispatch(fetchColumns(boardId));
       onClose();
     } catch (error) {
       console.error('Error saving column:', error);
