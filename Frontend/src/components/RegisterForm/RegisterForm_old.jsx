@@ -17,9 +17,9 @@ const RegisterForm = () => {
   const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
-    console.log("📌 Datele trimise la API:", data);
     try {
       const resultAction = await dispatch(registerUser(data));
+
       console.log("📌 Rezultat registerUser:", resultAction);
 
       if (registerUser.fulfilled.match(resultAction)) {
@@ -36,13 +36,11 @@ const RegisterForm = () => {
           resultAction.payload?.message || "❌ Eroare la înregistrare."
         );
         setIsError(true);
-        alert("Eroare la înregistrare: " + resultAction.payload?.message);
       }
     } catch (error) {
       console.error("❌ Eroare necunoscută la înregistrare:", error);
       setMessage("❌ Eroare necunoscută la înregistrare.");
       setIsError(true);
-      alert("Eroare necunoscută la înregistrare");
     }
   };
 

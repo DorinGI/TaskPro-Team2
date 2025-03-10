@@ -1,17 +1,33 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../api/axiosInstance.js';
 
-// 🔹 Login User
+// Axios instance with Authorization header
+// const api = axios.create({
+//   baseURL: 'http://localhost:5000/api/auth',
+// });
+
+// api.interceptors.request.use(
+//   config => {
+//     const token = localStorage.getItem('token');
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`;
+//     }
+//     return config;
+//   },
+//   error => Promise.reject(error)
+// );
+
+// Async Thunk for login
 export const loginUser = createAsyncThunk(
   'auth/login',
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post('/login', userData);
-      const { token, user } = response.data;
+      const { token, user, userId } = response.data;
 
-      // Salvăm token-ul pentru autentificare
+      // Save token to localStorage
       localStorage.setItem('token', token);
-
+      localStorage.setItem('userId', userId);
       return { user, token };
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || 'Login failed');
@@ -19,7 +35,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-// 🔹 Register User (Autentifică utilizatorul automat)
+// Async Thunk for register
 export const registerUser = createAsyncThunk(
   "auth/register",
   async (userData, { rejectWithValue }) => {
@@ -34,29 +50,27 @@ export const registerUser = createAsyncThunk(
         return rejectWithValue("No token received");
       }
 
-      // Salvăm token-ul în localStorage pentru autentificare automată
+      // 🔹 Salvăm token-ul pentru autentificare automată
       localStorage.setItem("token", token);
+      localStorage.setItem("userId", userId);
 
-      // 🔹 Apelăm `fetchUser` pentru a obține datele utilizatorului logat
-      const userResponse = await axiosInstance.get("/me");
-
-      return { user: userResponse.data, token };
+      return { token, userId };
     } catch (error) {
       return rejectWithValue(error.response?.data || "Registration failed");
     }
   }
 );
 
-// 🔹 Fetch User (Obține datele utilizatorului după autentificare)
+// Async Thunk to fetch user from token
 export const fetchUser = createAsyncThunk(
   'auth/fetchUser',
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get('/me');
-      console.log("📌 Date utilizator:", response.data);
+      console.log(response.data);
       return response.data;
     } catch (error) {
-      localStorage.removeItem('token'); // 🔹 Șterge token-ul dacă sesiunea a expirat
+      localStorage.removeItem('token');
       return rejectWithValue('Session expired');
     }
   }
@@ -71,7 +85,7 @@ const authSlice = createSlice({
     error: null,
   },
   reducers: {
-    logout: (state) => {
+    logout: state => {
       state.user = null;
       state.token = null;
       localStorage.removeItem('token');
@@ -79,22 +93,19 @@ const authSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      // 🔹 Register User
-      .addCase(registerUser.pending, (state) => {
-        state.isLoading = true;
+      .addCase(registerUser.pending, state => {
+        state.loading = true;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.loading = false;
+        state.user = action.payload;
+        state.token = localStorage.getItem('token');
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.isLoading = false;
+        state.loading = false;
         state.error = action.payload;
       })
-
-      // 🔹 Login User
-      .addCase(loginUser.pending, (state) => {
+      .addCase(loginUser.pending, state => {
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
@@ -106,17 +117,10 @@ const authSlice = createSlice({
         state.error = action.payload;
         state.isLoading = false;
       })
-
-      // 🔹 Fetch User
-      .addCase(fetchUser.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.user = action.payload;
       })
-      .addCase(fetchUser.rejected, (state) => {
-        state.isLoading = false;
+      .addCase(fetchUser.rejected, state => {
         state.user = null;
         state.token = null;
       });
