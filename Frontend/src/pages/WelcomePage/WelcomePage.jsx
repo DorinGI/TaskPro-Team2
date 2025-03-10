@@ -17,8 +17,12 @@ const WelcomePage = () => {
               alt="boy with macbook"
             />
           </div>
-          <div className={styles.logoCont}>
+          {/*<div className={styles.logoCont}>
             <Icon id="logo" size={48} />
+            <h1 className={styles.logoContName}>Task Pro</h1>
+          </div>*/}
+          <div className={styles.logoCont}>
+            <Icon id="logo" size={48} className={styles.logoIcon} />
             <h1 className={styles.logoContName}>Task Pro</h1>
           </div>
           <p className={styles.description}>

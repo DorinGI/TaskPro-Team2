@@ -14,12 +14,7 @@ const RegisterForm = () => {
   } = useForm();
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
-  const [showPassword, setShowPassword] = useState(false); // 🔹 Stare pentru vizibilitatea parolei
   const dispatch = useDispatch();
-
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
-  };
 
   const onSubmit = async (data) => {
     console.log("📌 Datele trimise la API:", data);
@@ -28,13 +23,18 @@ const RegisterForm = () => {
       console.log("📌 Rezultat registerUser:", resultAction);
 
       if (registerUser.fulfilled.match(resultAction)) {
-        console.log("✅ Utilizator înregistrat cu succes:", resultAction.payload);
+        console.log(
+          "✅ Utilizator înregistrat cu succes:",
+          resultAction.payload
+        );
         setMessage("✅ Utilizator înregistrat cu succes!");
         setIsError(false);
         reset();
       } else if (registerUser.rejected.match(resultAction)) {
         console.error("❌ Eroare la înregistrare:", resultAction.payload);
-        setMessage(resultAction.payload?.message || "❌ Eroare la înregistrare.");
+        setMessage(
+          resultAction.payload?.message || "❌ Eroare la înregistrare."
+        );
         setIsError(true);
         alert("Eroare la înregistrare: " + resultAction.payload?.message);
       }
@@ -65,13 +65,13 @@ const RegisterForm = () => {
 
         <div className={styles.passwordWrap}>
           <input
-            type={showPassword ? "text" : "password"} // 🔹 Schimbă tipul input-ului
+            type="password"
             className={styles.formInput}
             placeholder="Create a password"
             {...register("password", { required: "Password is required" })}
           />
-          <div className={styles.eye} onClick={togglePasswordVisibility}>
-            <Icon id={showPassword ? "eye-off" : "eye"} size={18} /> {/* 🔹 Schimbă iconița */}
+          <div className={styles.eye}>
+            <Icon id="eye" size={18} />
           </div>
         </div>
         <p className={styles.formError}>{errors.password?.message}</p>
