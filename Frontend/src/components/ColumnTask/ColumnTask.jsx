@@ -77,18 +77,6 @@ const ColumnTask = ({ column }) => {
                   alt="Delete"
                 />
               </button>
-
-              {/* Dropdown Button */}
-              <button
-                className={styles.cardButton}
-                onClick={handleOpenColumnsModal}
-              >
-                <img
-                  src={`${process.env.PUBLIC_URL}/assets/columns.svg`}
-                  alt="Columns"
-                  className={styles.cardIcon}
-                />
-              </button>
             </div>
           </div>
 
