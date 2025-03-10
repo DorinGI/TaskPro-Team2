@@ -1,70 +1,156 @@
-/* ColumnTask.module.css */
+/* General Styles */
 .wrapper {
-  min-width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #ffffff;
-  padding: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
 }
 
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Task List Styles */
+.taskList {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  gap: 8px;
+  max-height: calc(154px * 2 + 8px);
+  padding-right: 8px;
+  overflow-y: hidden;
+
+  /* Scrollbar styles */
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--scroll-track);
+    border: 1px solid var(--scroll-border);
+    border-radius: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 12px;
+    background-color: var(--scroll-thumb);
+  }
+
+  /* Responsive styles */
+  @media screen and (min-height: 780px) {
+    max-height: calc(154px * 3 + 16px);
+    width: 342px;
+  }
+
+  @media screen and (min-height: 942px) {
+    max-height: calc(154px * 4 + 24px);
+    width: 342px;
+  }
+
+  @media screen and (min-height: 1104px) {
+    max-height: calc(154px * 5 + 32px);
+    width: 342px;
+  }
+}
+
+/* Header Styles */
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  width: 334px;
+  height: 56px;
+  padding: 14px 24px;
+  border-radius: 8px;
+  background-color: var(--column-background-main);
+  font-weight: 500;
 }
 
 .title {
-  font-size: 18px;
-  font-weight: bold;
+  color: var(--column-text-main);
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.28px;
 }
 
 .iconWrapper {
   display: flex;
-  gap: 10px;
-}
-
-.editButton,
-.deleteButton {
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.editButton:hover,
-.deleteButton:hover {
-  transform: scale(1.2);
-}
-
-.editButton img,
-.deleteButton img {
-  width: 16px;
-  height: 16px;
-}
-
-.taskList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.addCardButton {
-  display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 8px; /* Space between icon and text */
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
-  border: none;
-  background-color: #f9f9f9;
-  color: #333;
-  border-radius: 4px;
+  gap: 8px;
 }
 
-.addCardButton img {
+.icon {
   width: 16px;
   height: 16px;
+  stroke: var(--column-icon);
+  fill: transparent;
+  cursor: pointer;
+  transition: all 250ms linear;
+
+  &:hover {
+    opacity: 0.4;
+    transform: scale(1.4);
+  }
+}
+
+/* Button Styles */
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 334px;
+  padding: 14px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.28px;
+  border: none;
+  color: var(--column-button-color);
+  background-color: var(--column-button-background);
+  border-radius: 8px;
+  transition: all 250ms linear;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.buttonPlus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  background-color: var(--column-plus-background);
+  margin-right: 8px;
+  padding: 7px;
+  transition: all 250ms linear;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.plusIcon {
+  width: 14px;
+  height: 14px;
+  stroke: var(--column-plus-color);
 }
