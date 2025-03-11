@@ -8,7 +8,6 @@ import { loginUser } from "../../redux/auth/authSlice";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [serverError, setServerError] = useState(""); // 🔹 Stocăm eroarea de la server
   const dispatch = useDispatch();
 
   // 🔹 Schema de validare cu Yup
@@ -24,20 +23,11 @@ const LoginForm = () => {
       .required("Parola este obligatorie"),
   });
 
-  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    setServerError(""); // 🔹 Resetăm mesajul de eroare anterior
+  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      const resultAction = await dispatch(loginUser(values));
-
-      if (loginUser.rejected.match(resultAction)) {
-        console.error("❌ Utilizator inexistent!");
-        setServerError("Utilizator inexistent! (user și/sau parolă incorecte)"); // 🔹 Setăm eroarea
-        resetForm(); // 🔹 Resetăm formularul
-      }
+      await dispatch(loginUser(values));
     } catch (error) {
-      console.error("❌ Eroare la autentificare:", error);
-      setServerError("Eroare la autentificare. Te rugăm să încerci din nou.");
-      resetForm();
+      setErrors({ email: "Login failed. Please try again." });
     }
     setSubmitting(false);
   };
@@ -48,14 +38,13 @@ const LoginForm = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ errors, touched, isSubmitting, setFieldTouched }) => (
+      {({ errors, touched, isSubmitting }) => (
         <Form className={styles.form} autoComplete="off">
           {/* 🔹 E-mail */}
           <Field
             className={`${styles.formInput} ${errors.email && touched.email ? styles.inputError : ""}`}
             name="email"
             placeholder="Enter your email"
-            onFocus={() => setServerError("")} // 🔹 Șterge eroarea când utilizatorul dă click pe email
           />
           <ErrorMessage className={styles.formError} name="email" component="p" />
 
@@ -72,9 +61,6 @@ const LoginForm = () => {
             </div>
           </div>
           <ErrorMessage className={styles.formError} name="password" component="p" />
-
-          {/* 🔹 Mesaj de eroare de la server */}
-          {serverError && <p className={styles.serverError}>{serverError}</p>}
 
           <button className={styles.submitBtn} type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Logging in..." : "Log in now"}

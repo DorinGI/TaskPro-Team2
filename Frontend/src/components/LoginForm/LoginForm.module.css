@@ -57,3 +57,28 @@
   letter-spacing: -0.02em;
   text-align: center;
 }
+.inputError {
+  border: 2px solid red;
+  background-color: #ffe6e6;
+  color: #d8000c;
+  outline: none;
+  transition: 0.3s ease-in-out;
+}
+
+.inputError:focus {
+  border-color: darkred;
+  background-color: #ffd6d6;
+}
+
+.formError {
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+}
+.serverError {
+  color: red;
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: bold;
+}

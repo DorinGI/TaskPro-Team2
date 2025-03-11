@@ -48,14 +48,13 @@ const LoginForm = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ errors, touched, isSubmitting, setFieldTouched }) => (
+      {({ errors, touched, isSubmitting }) => (
         <Form className={styles.form} autoComplete="off">
           {/* 🔹 E-mail */}
           <Field
             className={`${styles.formInput} ${errors.email && touched.email ? styles.inputError : ""}`}
             name="email"
             placeholder="Enter your email"
-            onFocus={() => setServerError("")} // 🔹 Șterge eroarea când utilizatorul dă click pe email
           />
           <ErrorMessage className={styles.formError} name="email" component="p" />
 
