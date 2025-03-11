@@ -1,3 +1,14 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .modal {
   position: fixed;
   top: 50%;
@@ -65,13 +76,13 @@ textarea {
 
 /* Colors */
 .blue {
-  background-color: blue;
+  background-color: #8fa1d0;
 }
 .red {
-  background-color: red;
+  background-color: #e09cb5;
 }
 .green {
-  background-color: green;
+  background-color: #bedbb0;
 }
 .gray {
   background-color: gray;
@@ -98,13 +109,19 @@ textarea {
   background-color: #9bbf8c;
 }
 
+.closeButtonContainer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 .closeButton {
-  background-color: #444;
-  color: white;
-  padding: 10px 20px;
+  background: transparent;
   border: none;
-  border-radius: 5px;
+  font-size: 18px;
   cursor: pointer;
+  color: white;
+  padding: 5px;
 }
 
 .closeButton:hover {

@@ -15,6 +15,7 @@
   padding: 20px;
   border-radius: 8px;
   width: 300px;
+  position: relative; /* Pentru a poziționa butonul de close absolut în interiorul acestui container */
 }
 
 .modalContent h2 {
@@ -37,21 +38,32 @@
   cursor: pointer;
 }
 
-.modalContent button[type='submit'] {
+.modalContent button[type="submit"] {
   background: #4caf50;
   color: white;
 }
 
-.modalContent button[type='button'] {
+.modalContent button[type="button"] {
   background: #f44336;
   color: white;
 }
-.closeButton {
+
+.closeButtonContainer {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 10px; /* Distanța de la partea de sus */
+  right: 10px; /* Distanța de la partea dreaptă */
+}
+
+.closeButton {
   background: transparent;
   border: none;
   font-size: 18px;
   cursor: pointer;
+  color: #000; /* Culoarea textului */
+  padding: 5px; /* Spațiu în jurul butonului */
+}
+
+.closeButton:hover {
+  color: #4caf50; /* Schimbă culoarea la hover */
+  background-color: transparent; /* Asigură-te că fundalul rămâne transparent */
 }
