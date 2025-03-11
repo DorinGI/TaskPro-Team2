@@ -1,30 +1,56 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import sprite from '../../assets/sprite.svg';
 import styles from './ColumnTask.module.css';
-import CardsList from '../Task/CardsList.jsx';
-import ModalAddCard from '../Modals/ModalAddEditCard.jsx';
+import CardItem from '../Task/CardItem.jsx';
+import ModalAddCard from '../ModalAddEditCard/ModalAddEditCard.jsx';
 import { deleteColumn } from '../../redux/columnSlice.js';
-import { createCard } from '../../redux/cardSlice.js';
+import { fetchCards, createCard, deleteCard } from '../../redux/cardSlice.js';
+import ModalAddColumn from '../ModalAddEditColumn/ModalAddEditColumn.jsx';
 
 const ColumnTask = ({ column }) => {
   const dispatch = useDispatch();
   const [openCardModal, setOpenCardModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [showColumnsDropdown, setShowColumnsDropdown] = useState(false);
+  const [selectedColumn, setSelectedColumn] = useState(null);
 
-  const handleDeleteColumn = () => {
-    dispatch(deleteColumn(column._id));
-  };
+  const columns = useSelector(state => state.columns.columns);
+  const cards =
+    useSelector(state => state.cards.cardsByColumn[column._id]) || [];
+  const memoizedCards = useMemo(() => cards, [cards]);
+
+  useEffect(() => {
+    dispatch(fetchCards(column._id));
+  }, [dispatch, column._id]);
+
+  const handleDeleteColumn = () => dispatch(deleteColumn(column._id));
+
   const handleAddCard = cardData => {
     dispatch(createCard({ ...cardData, columnId: column._id }));
     setOpenCardModal(false);
   };
-  const filteredColumn =
-    column.cards && column.cards.filter(card => card.priority === 'show all');
+  const handleEditCard = cardId => {
+    setOpenCardModal(true);
+    console.log('Edit card', cardId);
+    // Logică pentru editarea cardului (poate fi un set de date pentru modal)
+  };
 
-  const columnLength = column.cards?.length || 0;
-  // const filteredColumnLength = filteredColumn?.length || 0;
+  const handleDeleteCard = cardId => {
+    dispatch(deleteCard(cardId));
+    console.log('Card deleted', cardId);
+  };
 
-  // const condition = columnLength;
+  const handleOpenColumnsModal = () => {
+    setShowColumnsDropdown(!showColumnsDropdown);
+  };
+
+  const handleSelectColumn = columnId => {
+    setSelectedColumn(columnId);
+    setShowColumnsDropdown(false);
+    console.log('Selected column:', columnId);
+  };
+  console.log('Cards in column:', column._id, cards);
 
   return (
     <div className={styles.wrapper}>
@@ -33,47 +59,85 @@ const ColumnTask = ({ column }) => {
           <div className={styles.header}>
             <h2 className={styles.title}>{column.title}</h2>
             <div className={styles.iconWrapper}>
-              {/* Delete Button */}
+              {/* Edit Button */}
               <button
-                className={styles.deleteButton}
-                onClick={handleDeleteColumn}
+                className={styles.icon}
+                onClick={() => setOpenEditModal(true)}
               >
                 <img
-                  className={styles.deleteIcon}
-                  src={`${process.env.PUBLIC_URL}/assets/trash-04.svg`}
+                  src={`${process.env.PUBLIC_URL}/public/svg/edit-04.svg`}
+                  alt="Edit"
+                />
+              </button>
+
+              {/* Delete Button */}
+              <button className={styles.icon} onClick={handleDeleteColumn}>
+                <img
+                  src={`${process.env.PUBLIC_URL}/public/svg/delete-04.svg`}
                   alt="Delete"
                 />
               </button>
             </div>
           </div>
 
+          {/* Dropdown pentru coloane */}
+          {showColumnsDropdown && (
+            <div className={styles.dropdown}>
+              <ul>
+                {columns.map(col => (
+                  <li key={col._id} onClick={() => handleSelectColumn(col._id)}>
+                    {col.title}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           {/* Task List */}
           <ul className={styles.taskList}>
-            {column.cards?.map(card => (
-              <CardsList key={card._id} card={card} column={column} />
-            ))}
+            {memoizedCards.length > 0 ? (
+              memoizedCards.map(card => (
+                <CardItem
+                  key={card._id}
+                  card={card}
+                  onEdit={() => handleEditCard(card._id)}
+                  onDelete={() => handleDeleteCard(card._id)}
+                  onOpenColumnsModal={handleOpenColumnsModal}
+                />
+              ))
+            ) : (
+              <p>No cards available</p>
+            )}
           </ul>
         </div>
 
         {/* Add Card Button */}
         <button
-          className={styles.addCardButton}
+          className={`${styles.button} ${styles.buttonPlus}`}
           onClick={() => setOpenCardModal(true)}
         >
           <img
-            src={`${process.env.PUBLIC_URL}/assets/plus.svg`}
+            src={`${process.env.PUBLIC_URL}/public/svg/plus.svg`}
             alt="Add Card"
-            className={styles.icon}
+            className={styles.plusIcon}
           />
-          Add Card
+          <span>Add Card</span>
         </button>
       </div>
 
+      {/* Modals */}
+      <ModalAddColumn
+        isOpen={openEditModal}
+        onClose={() => setOpenEditModal(false)}
+        columnToEdit={column}
+      />
+
+      {/* Modal pentru adăugarea cardurilor */}
       <ModalAddCard
         open={openCardModal}
         onClose={() => setOpenCardModal(false)}
-        columnId={column._id}
         onSave={handleAddCard}
+        columnId={column._id}
       />
     </div>
   );

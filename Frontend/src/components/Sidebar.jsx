@@ -36,6 +36,8 @@ const Sidebar = () => {
 
   const toggleModal = modalName => {
     if (modalName === 'create') {
+      setSelectedBoard(null);
+      dispatch(resetSelectedBoardId());
       setIsModalOpen(true);
     } else if (modalName === 'help') {
       setIsHelpModalOpen(true);
@@ -70,7 +72,7 @@ const Sidebar = () => {
         <span className={styles.createBoardText}>Create New Board</span>
         <button
           className={styles.plusButton}
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => toggleModal('create')}
         >
           +
         </button>

@@ -93,6 +93,10 @@ button:hover {
   transition: background 0.3s ease;
 }
 
+.selectedBoard {
+  background: #4646d8;
+}
+
 .boardItem:hover {
   background: #373759;
 }

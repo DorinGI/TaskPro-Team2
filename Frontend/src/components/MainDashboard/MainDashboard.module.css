@@ -29,3 +29,6 @@
   gap: 20px;
   overflow-x: auto; /* Enable horizontal scrolling */
 }
+.columnsContainer {
+  display: flex;
+}

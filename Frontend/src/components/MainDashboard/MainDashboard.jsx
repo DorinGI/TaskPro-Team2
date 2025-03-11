@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ColumnTask from '../ColumnTask/ColumnTask.jsx';
-import ModalAddColumn from '../ModalAddColumn/ModalAddColumn.jsx';
-import { fetchColumns, createColumn } from '../../redux/columnSlice.js';
+import ModalAddColumn from '../ModalAddEditColumn/ModalAddEditColumn.jsx';
+import { fetchColumns, saveColumn } from '../../redux/columnSlice.js';
 import styles from './MainDashboard.module.css';
 
 const MainDashboard = () => {
@@ -31,7 +31,7 @@ const MainDashboard = () => {
   };
 
   const handleColumnAdded = newColumn => {
-    dispatch(createColumn({ ...newColumn, boardId: selectedBoardId }));
+    dispatch(saveColumn({ ...newColumn, boardId: selectedBoardId }));
   };
 
   return (

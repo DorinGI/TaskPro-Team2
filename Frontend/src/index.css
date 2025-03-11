@@ -1,3 +1,14 @@
 :root {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
+  --column-background-main: #f0f0f0;
+  --column-text-main: #333;
+  --column-icon: #666;
+  --column-button-color: #fff;
+  --column-button-background: #007bff;
+  --column-plus-background: #e0e0e0;
+  --column-plus-color: #666;
+  --scroll-thumb: #888;
+  --scroll-track: #f1f1f1;
+  --scroll-border: #ccc;
+  --plus-color: #00ff9d;
 }

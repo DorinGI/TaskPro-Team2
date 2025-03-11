@@ -5,20 +5,16 @@ import axiosInstance from '../api/axiosInstance.js';
 export const fetchCards = createAsyncThunk(
   'cards/fetchCards',
   async columnId => {
-    const response = await axiosInstance.get(
-      `/cards/columns/${columnId}/cards`
-    );
+    const response = await axiosInstance.get(`/cards/column/${columnId}`);
+    console.log('API response:', response.data);
     return { columnId, cards: response.data };
   }
 );
 
 export const createCard = createAsyncThunk(
   'cards/createCard',
-  async ({ columnId, cardData }) => {
-    const response = await axiosInstance.post(
-      `/columns/${columnId}/cards`,
-      cardData
-    );
+  async cardData => {
+    const response = await axiosInstance.post(`/cards`, cardData);
     return response.data;
   }
 );
@@ -39,6 +35,7 @@ const cardSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchCards.fulfilled, (state, action) => {
+        console.log('Fetched cards:', action.payload.cards);
         state.cardsByColumn[action.payload.columnId] = action.payload.cards;
       })
       .addCase(createCard.fulfilled, (state, action) => {

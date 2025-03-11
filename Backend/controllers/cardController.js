@@ -3,7 +3,7 @@ import Card from '../models/Card.js';
 // Obține toate coloanele pentru un board
 export const getCardsByColumn = async (req, res) => {
   const { columnId } = req.params;
-  console.log('columnId:', columnId);
+
   try {
     const cards = await Card.find({ columnId });
     if (!cards) {
