@@ -1,7 +1,18 @@
 import React from 'react';
-import styles from './CardItem.module.css'; // Să presupunem că ai un fișier CSS separat pentru carduri
+import sprite from '../../assets/sprite.svg';
+import styles from './CardItem.module.css';
 
 const CardItem = ({ card, onEdit, onDelete, onOpenColumnsModal }) => {
+  const formatDate = dateString => {
+    const date = new Date(dateString);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <div className={styles.cardWrapper}>
       {/* Title */}
@@ -12,33 +23,44 @@ const CardItem = ({ card, onEdit, onDelete, onOpenColumnsModal }) => {
 
       {/* Priority și Deadline */}
       <div className={styles.cardInfo}>
-        <span className={styles.cardPriority}>{card.priority}</span>
-        <span className={styles.cardDeadline}>{card.deadline}</span>
-      </div>
+        <div className={styles.priorityDeadlineWrapper}>
+          {/* Priority */}
+          <div className={styles.cardPriorityWrapper}>
+            <span className={styles.priorityText}>Priority</span>
+            <div
+              className={styles.priorityCircle}
+              style={{ backgroundColor: card.priorityColor }}
+            ></div>
+            <span className={styles.cardPriority}>{card.priority}</span>
+          </div>
 
-      {/* Action Buttons */}
-      <div className={styles.cardActions}>
-        <button onClick={onOpenColumnsModal} className={styles.cardButton}>
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/columns.svg`}
-            alt="Columns"
-            className={styles.cardIcon}
-          />
-        </button>
-        <button onClick={onEdit} className={styles.cardButton}>
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/edit.svg`}
-            alt="Edit"
-            className={styles.cardIcon}
-          />
-        </button>
-        <button onClick={onDelete} className={styles.cardButton}>
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/trash-04.svg`}
-            alt="Delete"
-            className={styles.cardIcon}
-          />
-        </button>
+          {/* Deadline */}
+          <div className={styles.cardDeadlineWrapper}>
+            <span className={styles.deadlineText}>Deadline</span>
+            <span className={styles.cardDeadline}>
+              {formatDate(card.deadline)}
+            </span>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className={styles.cardActions}>
+          <button onClick={onOpenColumnsModal} className={styles.editButton}>
+            <svg className={styles.boardButtonIcon} aria-hidden="true">
+              <use xlinkHref={`${sprite}#icon-arrow-circle-broken-right`} />
+            </svg>
+          </button>
+          <button onClick={onEdit} className={styles.editButton}>
+            <svg className={styles.boardButtonIcon} aria-hidden="true">
+              <use xlinkHref={`${sprite}#icon-pencil`} />
+            </svg>
+          </button>
+          <button onClick={onDelete} className={styles.editButton}>
+            <svg className={styles.boardButtonIcon} aria-hidden="true">
+              <use xlinkHref={`${sprite}#icon-trash`} />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   );

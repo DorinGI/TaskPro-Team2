@@ -1,7 +1,7 @@
 :root {
-  font-family: "Poppins", sans-serif;
-  --column-background-main: #f0f0f0;
-  --column-text-main: #333;
+  font-family: 'Poppins', sans-serif;
+  --column-background-main: #121212;
+  --column-text-main: #fff;
   --column-icon: #666;
   --column-button-color: #fff;
   --column-button-background: #007bff;

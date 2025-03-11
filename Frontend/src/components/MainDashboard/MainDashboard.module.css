@@ -1,34 +1,53 @@
-/* MainDashboard.module.css */
 .mainDashboard {
   display: flex;
   flex-direction: column;
   padding: 20px;
 }
 
+.columnsContainer {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  align-items: flex-start;
+}
+
 .addColumnButton {
   display: flex;
   align-items: center;
-  gap: 8px; /* Space between icon and text */
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-bottom: 20px;
+  justify-content: center;
+  gap: 8px;
+  width: 334px;
+  height: 56px;
+  border-radius: 8px;
+  background: #121212;
+  color: white;
   border: none;
-  background-color: #f9f9f9;
-  color: #333;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.addColumnButton:hover {
+  opacity: 0.8;
+}
+
+.addIconBox {
+  width: 28px;
+  height: 28px;
+  background: white;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 4px;
 }
 
-.addColumnButton img {
-  width: 16px;
-  height: 16px;
-}
-
-.columnContainer {
+.addText {
+  width: 177px;
+  height: 28px;
   display: flex;
-  gap: 20px;
-  overflow-x: auto; /* Enable horizontal scrolling */
-}
-.columnsContainer {
-  display: flex;
+  align-items: center;
 }

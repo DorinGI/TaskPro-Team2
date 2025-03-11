@@ -36,20 +36,19 @@ const MainDashboard = () => {
 
   return (
     <div className={styles.mainDashboard}>
-      <button
-        className={styles.addColumnButton}
-        onClick={handleAddColumn} // Open the modal when clicked
-      >
-        Add Column
-      </button>
-
       <div className={styles.columnsContainer}>
         {columns.map(column => (
           <ColumnTask key={column._id} column={column} />
         ))}
+
+        {/* Buton Add Column */}
+        <button className={styles.addColumnButton} onClick={handleAddColumn}>
+          <div className={styles.addIconBox}>+</div>
+          <span className={styles.addText}>Add another column</span>
+        </button>
       </div>
 
-      {/* Modal for adding column */}
+      {/* Modal pentru adăugarea unei coloane */}
       <ModalAddColumn
         isOpen={isAddColumnModalOpen}
         onClose={handleCloseModal}

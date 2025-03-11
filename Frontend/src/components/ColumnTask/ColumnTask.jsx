@@ -61,21 +61,22 @@ const ColumnTask = ({ column }) => {
             <div className={styles.iconWrapper}>
               {/* Edit Button */}
               <button
-                className={styles.icon}
+                className={styles.editButton}
                 onClick={() => setOpenEditModal(true)}
               >
-                <img
-                  src={`${process.env.PUBLIC_URL}/public/svg/edit-04.svg`}
-                  alt="Edit"
-                />
+                <svg className={styles.boardButtonIcon} aria-hidden="true">
+                  <use xlinkHref={`${sprite}#icon-pencil`} />
+                </svg>
               </button>
 
               {/* Delete Button */}
-              <button className={styles.icon} onClick={handleDeleteColumn}>
-                <img
-                  src={`${process.env.PUBLIC_URL}/public/svg/delete-04.svg`}
-                  alt="Delete"
-                />
+              <button
+                className={styles.editButton}
+                onClick={handleDeleteColumn}
+              >
+                <svg className={styles.boardButtonIcon} aria-hidden="true">
+                  <use xlinkHref={`${sprite}#icon-trash`} />
+                </svg>
               </button>
             </div>
           </div>
@@ -113,15 +114,11 @@ const ColumnTask = ({ column }) => {
 
         {/* Add Card Button */}
         <button
-          className={`${styles.button} ${styles.buttonPlus}`}
+          className={styles.addCardButton}
           onClick={() => setOpenCardModal(true)}
         >
-          <img
-            src={`${process.env.PUBLIC_URL}/public/svg/plus.svg`}
-            alt="Add Card"
-            className={styles.plusIcon}
-          />
-          <span>Add Card</span>
+          <div className={styles.addCardIconBox}>+</div>
+          <span className={styles.addCardText}>Add another card</span>
         </button>
       </div>
 
