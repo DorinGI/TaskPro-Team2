@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
@@ -88,6 +89,8 @@ const backgroundOptions = [
 
 const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
+  const userId = user ? user.userId : null;
 
   const formik = useFormik({
     initialValues: {
@@ -98,10 +101,15 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
         : backgroundOptions[0].value,
     },
     onSubmit: async values => {
+      console.log('User ID:', userId);
       if (!values.title.trim()) return;
 
       await dispatch(
-        saveBoard({ ...values, id: boardToEdit ? boardToEdit._id : undefined })
+        saveBoard({
+          ...values,
+          id: boardToEdit ? boardToEdit._id : undefined,
+          userId,
+        })
       );
 
       onClose();
@@ -111,6 +119,7 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
       if (!values.title.trim()) {
         errors.title = 'Title required';
       }
+      return errors;
     },
     enableReinitialize: true,
   });
@@ -124,7 +133,8 @@ const CreateBoardModal = ({ isOpen, onClose, boardToEdit }) => {
       });
     }
   }, [boardToEdit]);
-
+  console.log('User from Redux:', user);
+  console.log('Extracted User ID:', userId);
   return (
     <Modal
       isOpen={isOpen}
