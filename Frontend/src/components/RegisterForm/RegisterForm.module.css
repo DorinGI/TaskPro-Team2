@@ -64,3 +64,30 @@
   font-size: 14px;
   margin-top: 10px;
 }
+.inputError {
+  border: 2px solid red;
+  /* ✅ Bordură roșie pentru câmpurile invalide */
+  background-color: #ffe6e6;
+  /* ✅ Fundal roz pal pentru evidențiere */
+  color: #d8000c;
+  /* ✅ Text roșu închis pentru claritate */
+  outline: none;
+  /* ✅ Elimină efectul standard de focus */
+  transition: 0.3s ease-in-out;
+  /* ✅ Tranziție lină pentru schimbări */
+}
+
+/* 🔹 Când utilizatorul face focus pe input-ul invalid */
+.inputError:focus {
+  border-color: darkred;
+  /* ✅ Închide culoarea bordurii la focus */
+  background-color: #ffd6d6;
+  /* ✅ Schimbă fundalul ușor */
+}
+
+/* 🔹 Stilizare pentru mesajele de eroare */
+.formError {
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+}

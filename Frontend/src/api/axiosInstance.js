@@ -10,11 +10,15 @@ const axiosInstance = axios.create({
   },
 });
 
-// Adăugăm automat token-ul pentru autentificare
+// 🔹 Adăugăm automat token-ul la fiecare request, cu protecție la erori
 axiosInstance.interceptors.request.use(config => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  try {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  } catch (error) {
+    console.error("❌ Eroare la accesarea localStorage:", error);
   }
   return config;
 });

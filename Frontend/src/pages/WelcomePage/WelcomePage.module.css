@@ -28,7 +28,8 @@
 }
 .logoCont {
   display: flex;
-  gap: 14px;
+  align-items: center; /* Aliniere verticală pe mijloc */
+    gap: 14px;/* 🔹 Distanță între icon și text */
 }
 .logoContName {
   font-size: 40px;
