@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchBoards,
@@ -14,7 +14,7 @@ import styles from './Sidebar.module.css';
 import CreateBoardModal from './CreateBoardModal';
 import HelpModal from './HelpModal';
 
-const Sidebar = ({ isSidebarOpen }) => {
+const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
@@ -22,6 +22,27 @@ const Sidebar = ({ isSidebarOpen }) => {
     state => state.boards
   );
   const [selectedBoard, setSelectedBoard] = useState(null);
+  const sidebarRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        toggleSidebar(); // Close the sidebar when clicked outside
+      }
+    };
+
+    if (isSidebarOpen) {
+      // Add event listener when sidebar is open
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      // Remove event listener when sidebar is closed
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside); // Clean up on unmount
+    };
+  }, [isSidebarOpen, toggleSidebar]);
 
   useEffect(() => {
     dispatch(fetchBoards());
@@ -62,6 +83,7 @@ const Sidebar = ({ isSidebarOpen }) => {
 
   return (
     <aside
+      ref={sidebarRef}
       className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ''}`}
     >
       <div className={styles.logoCont}>

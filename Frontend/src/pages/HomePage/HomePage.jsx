@@ -12,7 +12,7 @@ const HomePage = () => {
   };
   return (
     <div className={styles.page}>
-      <Sidebar isSidebarOpen={isSidebarOpen} />
+      <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <div className={styles.mainCont}>
         <Header toggleSidebar={toggleSidebar} />
         <ScreenPage />
