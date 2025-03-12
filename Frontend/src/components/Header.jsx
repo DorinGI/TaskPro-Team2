@@ -31,7 +31,7 @@ const Header = ({ toggleSidebar }) => {
         </select>
         <div className={styles.userInfo} onClick={() => setIsModalOpen(true)}>
           <img
-            src={user?.photo || '../assets/welcome-icon.png'}
+            src={user?.photo || '/boarder_backgrounds/icon-ballons.png'}
             alt="User"
             className={styles.userPhoto}
           />

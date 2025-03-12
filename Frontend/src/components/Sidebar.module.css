@@ -1,6 +1,6 @@
 /* Sidebar.module.css */
 .sidebar {
-  width: 240px;
+  width: 350px;
   background: var(--column-background-main);
   color: var(--text-color);
   padding: 20px;
@@ -102,7 +102,7 @@ button:hover {
 }
 
 .selectedBoard {
-  background: #4646d8;
+  background: #bedbb0;
 }
 
 .boardItem:hover {
@@ -193,7 +193,7 @@ button:hover {
 }
 
 .bottomButtons {
-  margin-top: auto; /* Împinge butoanele în jos */
+  margin-top: auto;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -203,7 +203,7 @@ button:hover {
 
 .needHelp,
 .logout {
-  width: 90%; /* Ajustează lățimea butoanelor */
+  width: 90%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -226,7 +226,6 @@ button:hover {
 }
 
 .logout {
-  /* border: 1px solid var(--danger-color); */
   color: white;
 }
 
@@ -236,7 +235,6 @@ button:hover {
 }
 
 .needHelp {
-  /* border: 1px solid var(--secondary-color); */
   color: white;
 }
 
