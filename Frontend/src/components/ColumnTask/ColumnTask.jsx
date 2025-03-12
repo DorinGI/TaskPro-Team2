@@ -1,6 +1,7 @@
 // src/components/ColumnTask/ColumnTask.jsx
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import sprite from '../../assets/sprite.svg';
 import styles from './ColumnTask.module.css';
 import CardItem from '../Task/CardItem.jsx';
@@ -87,21 +88,27 @@ const ColumnTask = ({ column }) => {
       )}
 
       {/* Task List */}
-      <ul className={styles.taskList}>
-        {memoizedCards.length > 0 ? (
-          memoizedCards.map((card) => (
-            <CardItem
-              key={card._id}
-              card={card}
-              onEdit={() => handleEditCard(card._id)}
-              onDelete={() => handleDeleteCard(card._id)}
-              onOpenColumnsModal={handleOpenColumnsModal}
-            />
-          ))
-        ) : (
-          <p>No cards available</p>
+      <Droppable droppableId={column._id}>
+        {(provided) => (
+          <ul
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className={styles.taskList}
+          >
+            {memoizedCards.map((card, index) => (
+              <CardItem
+                key={card._id}
+                card={card}
+                index={index}
+                onEdit={() => handleEditCard(card._id)}
+                onDelete={() => handleDeleteCard(card._id)}
+                onOpenColumnsModal={handleOpenColumnsModal}
+              />
+            ))}
+            {provided.placeholder}
+          </ul>
         )}
-      </ul>
+      </Droppable>
 
       {/* Add Card Button */}
       <button

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import MainDashboard from '../MainDashboard/MainDashboard';
+import MainDashboard from '../MainDashboard/MainDashboard.jsx';
 import styles from './ScreenPage.module.css';
 
 const ScreenPage = () => {
