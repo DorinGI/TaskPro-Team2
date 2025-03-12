@@ -2,9 +2,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background: #333;
+  padding: 20px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.projectOffice {
+  width: 113px;
+  height: 28px;
+  top: 78px;
+  left: 284px;
+  background-color: #121212;
   color: white;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 28px;
+  padding-left: 10px;
 }
 
 .headerRight {
@@ -25,11 +38,4 @@
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.userPhoto {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 2px solid white;
 }

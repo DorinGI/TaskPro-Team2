@@ -1,5 +1,7 @@
+// src/components/ColumnTask/ColumnTask.jsx
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import sprite from '../../assets/sprite.svg';
 import styles from './ColumnTask.module.css';
 import CardItem from '../Task/CardItem.jsx';
@@ -13,11 +15,10 @@ const ColumnTask = ({ column }) => {
   const [openCardModal, setOpenCardModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [showColumnsDropdown, setShowColumnsDropdown] = useState(false);
-  const [selectedColumn, setSelectedColumn] = useState(null);
 
-  const columns = useSelector(state => state.columns.columns);
+  const columns = useSelector((state) => state.columns.columns);
   const cards =
-    useSelector(state => state.cards.cardsByColumn[column._id]) || [];
+    useSelector((state) => state.cards.cardsByColumn[column._id]) || [];
   const memoizedCards = useMemo(() => cards, [cards]);
 
   useEffect(() => {
@@ -26,17 +27,17 @@ const ColumnTask = ({ column }) => {
 
   const handleDeleteColumn = () => dispatch(deleteColumn(column._id));
 
-  const handleAddCard = cardData => {
+  const handleAddCard = (cardData) => {
     dispatch(createCard({ ...cardData, columnId: column._id }));
     setOpenCardModal(false);
   };
-  const handleEditCard = cardId => {
+
+  const handleEditCard = (cardId) => {
     setOpenCardModal(true);
     console.log('Edit card', cardId);
-    // Logică pentru editarea cardului (poate fi un set de date pentru modal)
   };
 
-  const handleDeleteCard = cardId => {
+  const handleDeleteCard = (cardId) => {
     dispatch(deleteCard(cardId));
     console.log('Card deleted', cardId);
   };
@@ -45,82 +46,78 @@ const ColumnTask = ({ column }) => {
     setShowColumnsDropdown(!showColumnsDropdown);
   };
 
-  const handleSelectColumn = columnId => {
-    setSelectedColumn(columnId);
-    setShowColumnsDropdown(false);
-    console.log('Selected column:', columnId);
-  };
-  console.log('Cards in column:', column._id, cards);
-
   return (
     <div className={styles.wrapper}>
-      <div className={styles.contentWrapper}>
-        <div className={styles.content}>
-          <div className={styles.header}>
-            <h2 className={styles.title}>{column.title}</h2>
-            <div className={styles.iconWrapper}>
-              {/* Edit Button */}
-              <button
-                className={styles.editButton}
-                onClick={() => setOpenEditModal(true)}
-              >
-                <svg className={styles.boardButtonIcon} aria-hidden="true">
-                  <use xlinkHref={`${sprite}#icon-pencil`} />
-                </svg>
-              </button>
+      {/* Column Header */}
+      <div className={styles.header}>
+        <h2 className={styles.title}>{column.title}</h2>
+        <div className={styles.iconWrapper}>
+          {/* Edit Button */}
+          <button
+            className={styles.editButton}
+            onClick={() => setOpenEditModal(true)}
+          >
+            <svg className={styles.boardButtonIcon} aria-hidden="true">
+              <use xlinkHref={`${sprite}#icon-pencil`} />
+            </svg>
+          </button>
 
-              {/* Delete Button */}
-              <button
-                className={styles.editButton}
-                onClick={handleDeleteColumn}
-              >
-                <svg className={styles.boardButtonIcon} aria-hidden="true">
-                  <use xlinkHref={`${sprite}#icon-trash`} />
-                </svg>
-              </button>
-            </div>
-          </div>
+          {/* Delete Button */}
+          <button
+            className={styles.deleteButton}
+            onClick={handleDeleteColumn}
+          >
+            <svg className={styles.boardButtonIcon} aria-hidden="true">
+              <use xlinkHref={`${sprite}#icon-trash`} />
+            </svg>
+          </button>
+        </div>
+      </div>
 
-          {/* Dropdown pentru coloane */}
-          {showColumnsDropdown && (
-            <div className={styles.dropdown}>
-              <ul>
-                {columns.map(col => (
-                  <li key={col._id} onClick={() => handleSelectColumn(col._id)}>
-                    {col.title}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Task List */}
-          <ul className={styles.taskList}>
-            {memoizedCards.length > 0 ? (
-              memoizedCards.map(card => (
-                <CardItem
-                  key={card._id}
-                  card={card}
-                  onEdit={() => handleEditCard(card._id)}
-                  onDelete={() => handleDeleteCard(card._id)}
-                  onOpenColumnsModal={handleOpenColumnsModal}
-                />
-              ))
-            ) : (
-              <p>No cards available</p>
-            )}
+      {/* Dropdown for Columns */}
+      {showColumnsDropdown && (
+        <div className={styles.dropdown}>
+          <ul>
+            {columns.map((col) => (
+              <li key={col._id} onClick={() => console.log('Selected:', col._id)}>
+                {col.title}
+              </li>
+            ))}
           </ul>
         </div>
+      )}
 
-        {/* Add Card Button */}
-        <button
-          className={styles.addCardButton}
-          onClick={() => setOpenCardModal(true)}
-        >
-          <div className={styles.addCardIconBox}>+</div>
-          <span className={styles.addCardText}>Add another card</span>
-        </button>
-      </div>
+      {/* Task List */}
+      <Droppable droppableId={column._id}>
+        {(provided) => (
+          <ul
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className={styles.taskList}
+          >
+            {memoizedCards.map((card, index) => (
+              <CardItem
+                key={card._id}
+                card={card}
+                index={index}
+                onEdit={() => handleEditCard(card._id)}
+                onDelete={() => handleDeleteCard(card._id)}
+                onOpenColumnsModal={handleOpenColumnsModal}
+              />
+            ))}
+            {provided.placeholder}
+          </ul>
+        )}
+      </Droppable>
+
+      {/* Add Card Button */}
+      <button
+        className={styles.addCardButton}
+        onClick={() => setOpenCardModal(true)}
+      >
+        <div className={styles.addCardIconBox}>+</div>
+        <span className={styles.addCardText}>Add another card</span>
+      </button>
 
       {/* Modals */}
       <ModalAddColumn
@@ -129,7 +126,7 @@ const ColumnTask = ({ column }) => {
         columnToEdit={column}
       />
 
-      {/* Modal pentru adăugarea cardurilor */}
+      {/* Modal for Adding Cards */}
       <ModalAddCard
         open={openCardModal}
         onClose={() => setOpenCardModal(false)}

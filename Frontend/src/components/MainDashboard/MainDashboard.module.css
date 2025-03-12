@@ -1,7 +1,11 @@
+/* MainDashboard.module.css */
 .mainDashboard {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  background: var(
+    --column-background-main
+  ); /* Dark background for main dashboard */
 }
 
 .columnsContainer {
@@ -9,6 +13,7 @@
   gap: 20px;
   overflow-x: auto;
   align-items: flex-start;
+  padding-bottom: 20px; /* Ensure space at the bottom for scrolling */
 }
 
 .addColumnButton {
@@ -19,13 +24,13 @@
   width: 334px;
   height: 56px;
   border-radius: 8px;
-  background: #121212;
-  color: white;
+  background: var(--column-background-main); /* Same background as columns */
+  color: var(--text-color);
   border: none;
   cursor: pointer;
   font-size: 16px;
   font-weight: 500;
-  transition: 0.3s;
+  transition: opacity 0.3s;
 }
 
 .addColumnButton:hover {
@@ -35,8 +40,8 @@
 .addIconBox {
   width: 28px;
   height: 28px;
-  background: white;
-  color: black;
+  background: #161616; /* Dark background for icon box */
+  color: #fff; /* White text for icon */
   font-size: 20px;
   font-weight: bold;
   display: flex;
@@ -50,4 +55,7 @@
   height: 28px;
   display: flex;
   align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color);
 }
