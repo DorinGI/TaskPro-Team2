@@ -113,12 +113,20 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      <button className={styles.needHelp} onClick={() => toggleModal('help')}>
-        Need Help?
-      </button>
-      <button className={styles.logout} onClick={handleLogout}>
-        Log Out
-      </button>
+      <div className={styles.bottomButtons}>
+        <button className={styles.needHelp} onClick={() => toggleModal('help')}>
+          <svg className={styles.boardButtonIcon} aria-hidden="true">
+            <use xlinkHref={`${sprite}#icon-help-circle`} />
+          </svg>
+          Need Help?
+        </button>
+        <button className={styles.logout} onClick={handleLogout}>
+          <svg className={styles.boardButtonIcon} aria-hidden="true">
+            <use xlinkHref={`${sprite}#icon-arrow-circle-broken-right`} />
+          </svg>
+          Log Out
+        </button>
+      </div>
 
       <CreateBoardModal
         isOpen={isModalOpen}
