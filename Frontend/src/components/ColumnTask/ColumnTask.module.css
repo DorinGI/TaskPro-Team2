@@ -1,67 +1,14 @@
+/* ColumnTask.module.css */
+
 /* General Styles */
 .wrapper {
   display: flex;
   flex-direction: column;
-}
-
-.contentWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-/* Task List Styles */
-.taskList {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 8px;
-  max-height: calc(154px * 2 + 8px);
-  padding-right: 8px;
-  overflow-y: hidden;
-
-  /* Scrollbar styles */
-  scrollbar-width: thin;
-  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: var(--scroll-track);
-    border: 1px solid var(--scroll-border);
-    border-radius: 12px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: 12px;
-    background-color: var(--scroll-thumb);
-  }
-
-  /* Responsive styles */
-  @media screen and (min-height: 780px) {
-    max-height: calc(154px * 3 + 16px);
-    width: 342px;
-  }
-
-  @media screen and (min-height: 942px) {
-    max-height: calc(154px * 4 + 24px);
-    width: 342px;
-  }
-
-  @media screen and (min-height: 1104px) {
-    max-height: calc(154px * 5 + 32px);
-    width: 342px;
-  }
+  width: 334px; /* Fixed width for consistency */
+  background-color: var(--column-background-main); /* Match board background */
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Header Styles */
@@ -69,33 +16,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 334px;
-  height: 56px;
-  padding: 14px 24px;
-  border-radius: 8px;
-  background-color: var(--column-background-main);
-  font-weight: 500;
+  margin-bottom: 16px;
 }
 
 .title {
-  color: var(--column-text-main);
-  font-size: 14px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  letter-spacing: -0.28px;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
 }
 
 .iconWrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 8px;
 }
 
 .editButton,
 .deleteButton {
   background: transparent;
-  border: 1px solid transparent;
+  border: none;
   cursor: pointer;
   padding: 5px;
   display: flex;
@@ -120,90 +59,30 @@
   stroke-opacity: 1;
 }
 
-.editButton:hover,
-.deleteButton:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.icon {
-  width: 16px;
-  height: 16px;
-  stroke: var(--column-icon);
-  fill: transparent;
-  cursor: pointer;
-  transition: all 250ms linear;
-
-  &:hover {
-    opacity: 0.4;
-    transform: scale(1.4);
-  }
-}
-
-/* Button Styles */
-.button {
+/* Task List Styles */
+.taskList {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 334px;
-  padding: 14px;
-  margin-bottom: 16px;
-  font-size: 14px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-  line-height: normal;
-  letter-spacing: -0.28px;
-  border: none;
-  color: var(--column-button-color);
-  background-color: var(--column-button-background);
-  border-radius: 8px;
-  transition: all 250ms linear;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.9;
-  }
+  flex-direction: column;
+  gap: 12px; /* Consistent spacing between cards */
+  margin-bottom: 12px; /* Same spacing between last card and "Add Another Card" button */
 }
 
-.buttonPlus {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  width: 28px;
-  height: 28px;
-  background-color: var(--column-plus-background);
-  margin-right: 8px;
-  padding: 7px;
-  transition: all 250ms linear;
-  cursor: pointer;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-}
-
-.plusIcon {
-  width: 14px;
-  height: 14px;
-  stroke: var(--column-plus-color);
-}
-
-/* Button for adding a card */
+/* Add Card Button */
 .addCardButton {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  width: 334px;
-  height: 56px;
+  width: 100%;
+  height: 48px;
   border-radius: 8px;
-  background: #bedbb0;
+  background: #bedbb0; /* Green button */
   color: #161616;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
-  transition: 0.3s;
+  transition: opacity 0.3s ease;
 }
 
 .addCardButton:hover {
@@ -228,4 +107,32 @@
   height: 28px;
   display: flex;
   align-items: center;
+}
+
+/* Dropdown Styles */
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--column-background-main);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px;
+  z-index: 10;
+}
+
+.dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown li {
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }

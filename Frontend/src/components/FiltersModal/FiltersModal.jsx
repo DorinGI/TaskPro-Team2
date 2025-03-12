@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { selectCurrentDashboard } from 'redux/dashboards/dashboardsSelectors';
 import { editDashboard } from 'redux/dashboards/dashboardsOperations';
 import { selectPriority } from 'redux/dashboards/dashboardsSlice';
-import styles from './FiltersModal.module.css'; // Import CSS module
+import styles from './FiltersModal.module.css'; 
 
 const options = ['without', 'low', 'medium', 'high'];
 

@@ -5,8 +5,8 @@
 }
 
 .light {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #000000;
+  color: #fff;
 }
 
 .violet {
@@ -19,7 +19,11 @@
   color: #ffffff;
 }
 
-h1 {
-  font-size: 24px;
+.h1 {
+  font-size: 20px;
   margin-bottom: 20px;
+}
+
+.title {
+  padding-left: 40px;
 }

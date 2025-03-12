@@ -1,7 +1,8 @@
+/* Sidebar.module.css */
 .sidebar {
   width: 240px;
-  background: #1e1e2f;
-  color: white;
+  background: var(--column-background-main); /* Dark background for sidebar */
+  color: var(--text-color);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -16,12 +17,14 @@
   height: 80px;
   margin-bottom: 15px;
 }
+
 .logoCont {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 60px;
 }
+
 .logoName {
   font-size: 16px;
   font-weight: 600;
@@ -40,10 +43,10 @@ h2 {
 button {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #4caf50;
+  border: 1px solid var(--primary-color);
   border-radius: 6px;
   background: transparent;
-  color: #4caf50;
+  color: var(--primary-color);
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -51,26 +54,26 @@ button {
 }
 
 button:hover {
-  background: #4caf50;
-  color: white;
+  background: var(--primary-color);
+  color: var(--text-color);
 }
 
 .needHelp {
-  border-color: #ff9800;
-  color: #ff9800;
+  border-color: var(--secondary-color);
+  color: var(--secondary-color);
 }
 
 .needHelp:hover {
-  background: #ff9800;
+  background: var(--secondary-color);
 }
 
 .logout {
-  border-color: #f44336;
-  color: #f44336;
+  border-color: var(--danger-color);
+  color: var(--danger-color);
 }
 
 .logout:hover {
-  background: #f44336;
+  background: var(--danger-color);
 }
 
 .boardList {
@@ -105,7 +108,7 @@ button:hover {
   width: 40px;
   height: 40px;
   margin-right: 8px;
-  stroke: white;
+  stroke: var(--text-color);
   stroke-opacity: 0.5;
   stroke-width: 1.3;
   stroke-linecap: round;
@@ -133,7 +136,7 @@ button:hover {
 .deleteButton svg {
   width: 18px;
   height: 18px;
-  stroke: white;
+  stroke: var(--text-color);
   stroke-opacity: 0.5;
   stroke-width: 1.3;
   stroke-linecap: round;
@@ -149,10 +152,11 @@ button:hover {
 .deleteButton:hover {
   background: rgba(255, 255, 255, 0.1);
 }
+
 .boardHeader {
   display: flex;
   align-items: center;
-  gap: 10px; /* Spațiu între text și buton */
+  gap: 10px;
 }
 
 .createBoardText {
@@ -160,7 +164,7 @@ button:hover {
   font-weight: 500;
   font-size: 14px;
   letter-spacing: -0.02em;
-  color: #fff;
+  color: var(--text-color);
 }
 
 .plusButton {
@@ -170,11 +174,11 @@ button:hover {
   border-radius: 6px;
   width: 40px;
   height: 36px;
-  background: #bedbb0;
+  background: var(--success-color);
   border: none;
   font-size: 20px;
   font-weight: bold;
-  color: #333;
+  color: var(--text-color);
   cursor: pointer;
   transition: background 0.2s ease-in-out;
 }

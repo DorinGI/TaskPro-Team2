@@ -8,47 +8,54 @@ import styles from './MainDashboard.module.css';
 
 const MainDashboard = () => {
   const dispatch = useDispatch();
-  const selectedBoardId = useSelector(state => state.boards.selectedBoardId);
-  const columns = useSelector(state => state.columns.columns);
+  const selectedBoardId = useSelector((state) => state.boards.selectedBoardId);
+  const columns = useSelector((state) => state.columns.columns);
   const [isAddColumnModalOpen, setIsAddColumnModalOpen] = useState(false);
 
+  // Fetch columns when the selected board changes
   useEffect(() => {
     if (selectedBoardId) {
       dispatch(fetchColumns(selectedBoardId));
     }
   }, [selectedBoardId, dispatch]);
 
+  // Filter columns by the selected board ID
   const filteredColumns = columns.filter(
-    column => column.boardId === selectedBoardId
+    (column) => column.boardId === selectedBoardId
   );
 
+  // Open the modal for adding a new column
   const handleAddColumn = () => {
     setIsAddColumnModalOpen(true);
   };
 
+  // Close the modal
   const handleCloseModal = () => {
     setIsAddColumnModalOpen(false);
   };
 
-  const handleColumnAdded = newColumn => {
+  // Handle saving a new column
+  const handleColumnAdded = (newColumn) => {
     dispatch(saveColumn({ ...newColumn, boardId: selectedBoardId }));
   };
 
   return (
     <div className={styles.mainDashboard}>
+      {/* Columns Container */}
       <div className={styles.columnsContainer}>
-        {columns.map(column => (
+        {/* Render each column */}
+        {filteredColumns.map((column) => (
           <ColumnTask key={column._id} column={column} />
         ))}
 
-        {/* Buton Add Column */}
+        {/* Add Column Button */}
         <button className={styles.addColumnButton} onClick={handleAddColumn}>
           <div className={styles.addIconBox}>+</div>
           <span className={styles.addText}>Add another column</span>
         </button>
       </div>
 
-      {/* Modal pentru adăugarea unei coloane */}
+      {/* Modal for Adding a New Column */}
       <ModalAddColumn
         isOpen={isAddColumnModalOpen}
         onClose={handleCloseModal}
