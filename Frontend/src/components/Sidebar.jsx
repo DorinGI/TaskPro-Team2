@@ -14,7 +14,7 @@ import styles from './Sidebar.module.css';
 import CreateBoardModal from './CreateBoardModal';
 import HelpModal from './HelpModal';
 
-const Sidebar = () => {
+const Sidebar = ({ isSidebarOpen }) => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
@@ -61,7 +61,9 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className={styles.sidebar}>
+    <aside
+      className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ''}`}
+    >
       <div className={styles.logoCont}>
         <Icon id="logo" size={32} />
         <p className={styles.logoName}>Task Pro</p>

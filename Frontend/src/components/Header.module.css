@@ -39,3 +39,29 @@
   align-items: center;
   gap: 10px;
 }
+.sidebarToggle {
+  display: none;
+}
+
+@media (max-width: 750px) {
+  .sidebarToggle {
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+  }
+
+  .sidebarToggle svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--text-color);
+    stroke-opacity: 0.5;
+    stroke-width: 1.3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
